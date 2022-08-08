@@ -1,6 +1,6 @@
-import { client } from "..";
-import { Event } from "../structures/Event";
+import { client } from '..';
+import { Event } from '../structures/Event';
 
-export default new Event("ready", () => {
-    client.logger.ready(`${client.user.tag} is online!`)
+export default new Event('ready', () => {
+  client.logger.info(`${client.user.tag} is now online!`, { tags: ['Bot'] });
 });
