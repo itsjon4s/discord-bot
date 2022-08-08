@@ -1,26 +1,50 @@
-import chalk from 'chalk'
-import { inspect } from 'util'
+import { createLogger as createWinstonLogger, format, Logger, LoggerOptions } from 'winston';
+import { Console, File } from 'winston/lib/winston/transports';
+import { inspect } from 'node:util';
+import type { Siesta } from './Client';
 
-export class Logger {
-
-  public ready(content: string) {
-    console.log(`${chalk.green('ready')} -`, content)
-  }
-
-  public info(content: string) {
-    console.log(`${chalk.blue('info')} -`, content)
-  }
-
-  public warn(content: string) {
-    console.log(`${chalk.yellow('warn')} -`, content)
-  }
-
-  public error(content: unknown) {
-    console.log(`${chalk.red('error')} -`, this.isError(content) ? inspect(content) : content)
-  }
-
-  private isError(error: any): boolean {
-    return !!(error instanceof Error)
-  }
-
+function loadWinstonLogger(logger: Logger, shardId: string | number = 'Manager') {
+  logger
+    .add(
+      new Console({
+        level: 'silly',
+        format: format.combine(
+          format.timestamp(),
+          format.colorize(),
+          format.printf(info => {
+            const tags = info.tags?.map((t: string) => `\x1B[36m${t}\x1B[39m`).join(', ') ?? '';
+            const shardPrefix = ` --- [\x1B[36mShard ${shardId}\x1B[39m, ${tags}]:`;
+            return `${info.timestamp} ${shardPrefix} ${info.message instanceof Error ? inspect(info.message, { depth: 0 }) : info.message}`;
+          })
+        )
+      })
+    )
+    .add(
+      new File({
+        level: 'debug',
+        filename: typeof shardId === 'number' ? `shard${shardId}.log` : 'manager.log',
+        dirname: './logs',
+        format: format.combine(
+          format.timestamp(),
+          format.uncolorize(),
+          format.printf(info => {
+            const tags = info.tags?.map((t: string) => `\x1B[36m${t}\x1B[39m`).join(', ') ?? '';
+            return `${info.timestamp} --- [Shard ${shardId}, ${tags}]: ${info.message instanceof Error ? inspect(info.message, { depth: 0 }) : info.message}`;
+          })
+        )
+      })
+    );
 }
+
+export function createLogger(options?: LoggerOptions, client?: Siesta) {
+  const logger = createWinstonLogger({
+    handleExceptions: options?.handleExceptions ?? true,
+    handleRejections: options?.handleRejections ?? true,
+    exitOnError: false
+  });
+  loadWinstonLogger(logger, client?.shard?.ids[0] ?? 'Manager');
+
+  return logger;
+}
+
+export { Logger };
