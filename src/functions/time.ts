@@ -1,23 +1,25 @@
+/* eslint-disable no-bitwise */
+
 export const formatTime = (ms: number) => {
   let seconds = ms / 1000;
   const days = ~~(seconds / 86400);
-  seconds = seconds % 86400;
+  seconds %= 86400;
   const hours = ~~(seconds / 3600);
-  seconds = seconds % 3600;
+  seconds %= 3600;
   const minutes = ~~(seconds / 60);
-  seconds = seconds % 60;
+  seconds %= 60;
 
   if (days) {
     return `${days}d, ${hours}h, ${minutes}m, ${seconds}s`;
   }
-  else if (hours) {
+  if (hours) {
     return `${hours}h, ${minutes}m, ${seconds}s`;
   }
-  else if (minutes) {
+  if (minutes) {
     return `${minutes}m, ${seconds}s`;
   }
   return `${seconds}s`;
-}
+};
 
 export const timeToMS = (time: string) => {
   const timeUnits = time
@@ -26,9 +28,7 @@ export const timeToMS = (time: string) => {
     .split('');
   const formats = ['d', 'h', 'm', 's'];
 
-  const isValid =
-  timeUnits.length === new Set(timeUnits).size &&
-  timeUnits.every((u, i, a) => formats.includes(u) && formats.indexOf(a[i - 1]) < formats.indexOf(u));
+  const isValid = timeUnits.length === new Set(timeUnits).size && timeUnits.every((u, i, a) => formats.includes(u) && formats.indexOf(a[i - 1]) < formats.indexOf(u));
   if (!isValid) return null;
 
   const formatted = time
@@ -36,8 +36,8 @@ export const timeToMS = (time: string) => {
     .toLowerCase()
     .trim()
     .split(' ')
-    .filter((f) => !!f);
-  if (formatted.some((e) => !/[0-9]/.test(e))) return null;
+    .filter(f => !!f);
+  if (formatted.some(e => !/[0-9]/.test(e))) return null;
 
   const invalid = {
     h: 24,
@@ -58,11 +58,5 @@ export const timeToMS = (time: string) => {
     s: 1000
   };
 
-  return formatted.reduce(
-    (acc, curr) =>
-      acc +
-  parseInt(curr.substring(0, curr.length - 1)) *
-  convertions[curr[curr.length - 1]],
-    0
-  );
-}
+  return formatted.reduce((acc, curr) => acc + parseInt(curr.substring(0, curr.length - 1), 10) * convertions[curr[curr.length - 1]], 0);
+};

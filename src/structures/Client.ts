@@ -31,7 +31,7 @@ export class Siesta extends Client {
     this.commands = new Collection();
   }
 
-  async init() {
+  init() {
     this.logger = createLogger(
       {
         handleExceptions: true,
@@ -66,7 +66,7 @@ export class Siesta extends Client {
     this.logger.info(`Loaded ${commandFiles.length} commands successfully!`, { tags: ['Commands'] });
 
     this.on('ready', () => {
-      if(process.env.enviroment === 'prod') client.application.commands.set(slashCommands);
+      if (process.env.enviroment === 'prod') client.application.commands.set(slashCommands);
     });
   }
 

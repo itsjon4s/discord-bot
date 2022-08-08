@@ -2,7 +2,7 @@ import { createLogger as createWinstonLogger, format, Logger, LoggerOptions } fr
 import { Console, File } from 'winston/lib/winston/transports';
 import { inspect } from 'node:util';
 import type { Siesta } from './Client';
-import chalk from 'chalk'
+import chalk from 'chalk';
 
 function loadWinstonLogger(logger: Logger, shardId: string | number = 'Manager') {
   logger

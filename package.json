@@ -27,6 +27,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "chalk": "^5.0.1",
     "discord.js": "^14.1.2",
     "dotenv": "^10.0.0",
     "glob": "^7.2.0",
