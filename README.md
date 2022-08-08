@@ -1,7 +1,5 @@
-## 🐬 Siesta
-> Siesta is a music bot, made with TypeScript and Node.js
-
-### Self hosting
+# 🐬 Siesta
+> Siesta is a music bot, made with [TypeScript](https://www.typescriptlang.org/) and [Node.js](https://nodejs.org/)
 # **💻 Self Hosting**
 
 - `1.` Install node 16.9.x or higher
