@@ -39,7 +39,7 @@ export class Siesta extends Client {
       },
       this
     );
-    await this.registerModules();
+    this.registerModules();
     this.login(process.env.token);
   }
 
@@ -66,7 +66,7 @@ export class Siesta extends Client {
     this.logger.info(`Loaded ${commandFiles.length} commands successfully!`, { tags: ['Commands'] });
 
     this.on('ready', () => {
-      client.application.commands.set(slashCommands);
+      if(process.env.enviroment === 'prod') client.application.commands.set(slashCommands);
     });
   }
 
