@@ -11,7 +11,7 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
 
     if (command.playerOnly && !client.manager.players.get(interaction.guildId)) return;
 
-    if (command.ownerOnly && interaction.user.id !== '431768491759239211') return;
+    if (command.ownerOnly && !['499356551535001610', '431768491759239211'].some(id => interaction.user.id === id)) return;
 
     if (command.sameChannelOnly) {
       const member = interaction.member as GuildMember;

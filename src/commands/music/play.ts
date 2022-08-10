@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, GuildMember } from 'discord.js';
 import { SearchResult, ConnectionState } from 'vulkava';
 import { Command } from '../../structures/Command';
+import { Queue } from '../../structures/Queue';
 
 export default new Command({
   name: 'play',
@@ -37,7 +38,8 @@ export default new Command({
         guildId: interaction.guild.id,
         voiceChannelId: member.voice.channelId,
         textChannelId: interaction.channel.id,
-        selfDeaf: true
+        selfDeaf: true,
+        queue: new Queue()
       });
       player.filters.setVolume(30);
     }

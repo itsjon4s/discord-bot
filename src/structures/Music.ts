@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js';
-import { NodeOptions, Vulkava } from 'vulkava';
+import { Node, NodeOptions, Vulkava } from 'vulkava';
 import { IncomingDiscordPayload, OutgoingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
 
@@ -14,8 +14,15 @@ export class Manager extends Vulkava {
 
     this.client = client;
 
-    this.on('nodeConnect', node => this.client.logger.info(`Node ${node.options.id} Connected`, { tags: ['Vulkava'] }));
-    this.on('nodeDisconnect', node => this.client.logger.info(`Node ${node.options.id} Disconected`, { tags: ['Vulkava'] }));
+    this.on('nodeConnect', (node: Node) => {
+      this.client.logger.info(`Node ${node.options.id} Connected`, { tags: ['Vulkava'] });
+      setInterval(() => {
+        node.send({
+          op: 'pong'
+        });
+      }, 45000);
+    });
+    this.on('nodeDisconnect', (node: Node) => this.client.logger.info(`Node ${node.options.id} Disconected`, { tags: ['Vulkava'] }));
     this.on('trackStart', (player, track) => {
       const channel = client.guilds.cache.get(player.guildId).channels.cache.get(player.textChannelId) as TextChannel;
 
@@ -29,6 +36,10 @@ export class Manager extends Vulkava {
             msg.delete().catch(() => {});
           }, ONE_MINUTE * 3);
         });
+    });
+
+    this.on('error', (node, error) => {
+      this.client.logger.warn(`Error in ${node.options.id} (${error.message})`, { tags: ['Vulkava'] });
     });
   }
 

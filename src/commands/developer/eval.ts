@@ -21,12 +21,12 @@ export default new Command({
     try {
       const res = await eval(interaction.options.getString('code'));
       const cleanResult = typeof res !== 'string' ? inspect(res, { depth: 0 }).replaceAll(client.token, '*') : res.replaceAll(client.token, '*');
-      return await interaction.reply({
+      return interaction.reply({
         content: `\`\`\`js\n${cleanResult.slice(0, 1900)}\`\`\``
       });
     } catch (err) {
       if (err instanceof Error) {
-        return await interaction.reply({
+        return interaction.reply({
           content: `\`\`\`js\n${err.stack}\`\`\``
         });
       }
