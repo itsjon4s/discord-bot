@@ -8,7 +8,7 @@
 npm i -g yarn
 yarn
 ```
-- `3.` Fill the `.env.example` and rename it to `.env`
+- `3.` Fill the `config.ts.example` and rename it to `config.ts`
 - `4.` To turn on the bot just run 
 ```bash
 yarn build && yarn start

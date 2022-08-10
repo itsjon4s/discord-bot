@@ -1,14 +1,16 @@
-import { Awaitable, ChatInputApplicationCommandData, ChatInputCommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
+import { Awaitable, ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'discord.js';
 import { Siesta } from './Client';
 
 interface ExecuteOptions {
-  client: Siesta;
   interaction: ChatInputCommandInteraction;
-  args: CommandInteractionOptionResolver;
+  client: Siesta;
 }
 
 export type CommandType = {
-  exec: (opts: ExecuteOptions) => Awaitable<void>;
+  exec: (opts: ExecuteOptions) => Awaitable<any>;
+  playerOnly?: boolean;
+  ownerOnly?: boolean;
+  sameChannelOnly?: boolean;
 } & ChatInputApplicationCommandData;
 
 export class Command {

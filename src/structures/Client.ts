@@ -2,15 +2,18 @@ import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, Gat
 import glob from 'glob';
 import { promisify } from 'util';
 import { client } from '..';
+import config from '../../config';
 import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
+import { Manager } from './Music';
 
 const globPromise = promisify(glob);
 
 export class Siesta extends Client {
   public commands: Collection<string, CommandType>;
   public logger: Logger;
+  public manager: Manager;
 
   constructor() {
     super({
@@ -26,9 +29,11 @@ export class Siesta extends Client {
         ThreadMemberManager: 0,
         UserManager: 0
       }),
-      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates]
+      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates],
+      presence: { status: config.enviroment === 'dev' ? 'idle' : 'online' }
     });
     this.commands = new Collection();
+    this.manager = new Manager(this, config.nodes);
   }
 
   init() {
@@ -40,7 +45,7 @@ export class Siesta extends Client {
       this
     );
     this.registerModules();
-    this.login(process.env.token);
+    this.login(config.token);
   }
 
   async importFile(file: string) {
@@ -66,7 +71,7 @@ export class Siesta extends Client {
     this.logger.info(`Loaded ${commandFiles.length} commands successfully!`, { tags: ['Commands'] });
 
     this.on('ready', () => {
-      if (process.env.enviroment === 'prod') client.application.commands.set(slashCommands);
+      if (config.enviroment === 'prod') client.application.commands.set(slashCommands);
     });
   }
 
