@@ -1,8 +1,9 @@
 import { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Vulkava } from 'vulkava';
 import { IncomingDiscordPayload, OutgoingDiscordPayload } from 'vulkava/lib/@types';
+import play from '../commands/music/play';
 import type { Siesta } from './Client';
-
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export class Manager extends Vulkava {
   client: Siesta;
 
@@ -36,6 +37,16 @@ export class Manager extends Vulkava {
             msg.delete().catch(() => {});
           }, ONE_MINUTE * 3);
         });
+    });
+
+    this.on('queueEnd', async player => {
+      await sleep(3 * 60 * 1000);
+      if (this.players.get(player.guildId) && this.players.get(player.guildId).queue.size === 0) {
+        const channel = this.client.channels.cache.get(player.textChannelId) as TextChannel;
+        channel.send({
+          content: "**🔇 I wasn't playing for 3 minutes so i left the channel.**"
+        });
+      }
     });
 
     this.on('error', (node, error) => {

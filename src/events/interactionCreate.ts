@@ -1,14 +1,14 @@
 /* eslint-disable consistent-return */
 import { client } from '..';
 import { Event } from '../structures/Event';
-import { GuildMember, Interaction } from 'discord.js';
+import { AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction, SelectMenuInteraction } from 'discord.js';
 import { request } from 'undici';
 
 export default new Event('interactionCreate', async (interaction: Interaction) => {
-  if (interaction.isChatInputCommand()) {
+
+  if (interaction instanceof ChatInputCommandInteraction) {
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
-
     if (command.playerOnly && !client.manager.players.get(interaction.guildId)) return;
 
     if (command.ownerOnly && !['499356551535001610', '431768491759239211'].some(id => interaction.user.id === id)) return;
@@ -37,17 +37,19 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
         client
       });
     } catch (err) {
-      await interaction
-        .reply({
-          content: '**☝️ There was a error while executing this command, i already reported it for my developers please be patient while is gets solved!**',
-          ephemeral: true
-        })
-        .catch(() => {});
-      client.logger.error(`Error in command ${command.name}\n${err}`, { tags: ['Command'] });
+      if (err instanceof Error) {
+        await interaction
+          .reply({
+            content: '**☝️ There was a error while executing this command, i already reported it for my developers please be patient while is gets solved!**',
+            ephemeral: true
+          })
+          .catch(() => {});
+        client.logger.error(`Error in command ${command.name}\n${err.message}`, { tags: ['Command'] });
+      }
     }
   }
 
-  if (interaction.isAutocomplete()) {
+  if (interaction instanceof AutocompleteInteraction) {
     if (!interaction.member) return;
     const value = interaction.options.getFocused();
     if (!value) return interaction.respond([]);

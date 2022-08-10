@@ -21,7 +21,6 @@ export default new Command({
   async exec({ interaction, client }) {
     let player = client.manager.players.get(interaction.guild.id);
     const song = interaction.options.getString('song');
-    const member = interaction.member as GuildMember;
 
     const res: SearchResult = await client.manager.search(song);
 
@@ -40,7 +39,7 @@ export default new Command({
     if (!player) {
       player = client.manager.createPlayer({
         guildId: interaction.guild.id,
-        voiceChannelId: member.voice.channelId,
+        voiceChannelId: (interaction.member as GuildMember)?.voice?.channelId,
         textChannelId: interaction.channel.id,
         selfDeaf: true,
         queue: new Queue()
