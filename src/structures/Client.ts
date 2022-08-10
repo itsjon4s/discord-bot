@@ -2,6 +2,7 @@ import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, Gat
 import glob from 'glob';
 import { promisify } from 'util';
 import { client } from '..';
+// @ts-ignore
 import config from '../../config';
 import { CommandType } from './Command';
 import { Event } from './Event';

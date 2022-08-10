@@ -1,11 +1,10 @@
 /* eslint-disable consistent-return */
 import { client } from '..';
 import { Event } from '../structures/Event';
-import { AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction, SelectMenuInteraction } from 'discord.js';
+import { AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction } from 'discord.js';
 import { request } from 'undici';
 
 export default new Event('interactionCreate', async (interaction: Interaction) => {
-
   if (interaction instanceof ChatInputCommandInteraction) {
     const command = client.commands.get(interaction.commandName);
     if (!command) return;

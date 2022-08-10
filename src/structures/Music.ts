@@ -1,9 +1,9 @@
 import { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Vulkava } from 'vulkava';
 import { IncomingDiscordPayload, OutgoingDiscordPayload } from 'vulkava/lib/@types';
-import play from '../commands/music/play';
 import type { Siesta } from './Client';
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 export class Manager extends Vulkava {
   client: Siesta;
 
