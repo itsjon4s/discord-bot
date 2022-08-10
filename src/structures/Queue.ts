@@ -1,9 +1,10 @@
-import { User } from "discord.js";
-import { DefaultQueue } from "vulkava";
+/* eslint-disable no-useless-constructor */
+import { User } from 'discord.js';
+import { DefaultQueue } from 'vulkava';
 
 export class Queue extends DefaultQueue {
   constructor() {
-    super()
+    super();
   }
 
   public getTrack(index: number) {
@@ -11,16 +12,16 @@ export class Queue extends DefaultQueue {
   }
 
   public removeTrack(index: number) {
-    return this.tracks.splice(index, 1)
+    return this.tracks.splice(index, 1);
   }
 
-  public getTracksData(pos: number, end: number) {
+  public getTracksData(start: number, end: number) {
     const data = [];
-
+    let pos = start;
     for (; pos < end && this.tracks[pos]; pos++) {
       const req = this.tracks[pos].requester as User;
-      const track = this.tracks[pos]
-      data.push(`**${pos + 1} - [${this.shorten(track.title, 12)}](${track.uri}) < ${req.toString()} >**`)
+      const track = this.tracks[pos];
+      data.push(`**${pos + 1} - [${this.shorten(track.title, 12)}](${track.uri}) < ${req.toString()} >**`);
     }
     return data.join('\n');
   }
@@ -28,6 +29,6 @@ export class Queue extends DefaultQueue {
   private shorten(text: string, size: number) {
     if (typeof text !== 'string') return '';
     if (text.length <= size) return text;
-    return text.slice(0, size).trim() + '...';
-  } 
+    return `${text.slice(0, size).trim()}...`;
+  }
 }

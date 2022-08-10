@@ -22,12 +22,14 @@ export default new Command({
       const res = await eval(interaction.options.getString('code'));
       const cleanResult = typeof res !== 'string' ? inspect(res, { depth: 0 }).replaceAll(client.token, '*') : res.replaceAll(client.token, '*');
       return interaction.reply({
-        content: `\`\`\`js\n${cleanResult.slice(0, 1900)}\`\`\``
+        content: `\`\`\`js\n${cleanResult.slice(0, 1900)}\`\`\``,
+        ephemeral: true
       });
     } catch (err) {
       if (err instanceof Error) {
         return interaction.reply({
-          content: `\`\`\`js\n${err.stack}\`\`\``
+          content: `\`\`\`js\n${err.stack}\`\`\``,
+          ephemeral: true
         });
       }
     }

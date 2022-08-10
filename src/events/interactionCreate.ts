@@ -16,7 +16,19 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
     if (command.sameChannelOnly) {
       const member = interaction.member as GuildMember;
       const currentChannel = member?.voice?.channelId;
-      if (!currentChannel) return interaction.reply({ content: '<:errado:977717009833934898> nao' });
+      if (!currentChannel) {
+        return interaction.reply({
+          content: '**☝️ You need to be in a voice channel to use this command**',
+          ephemeral: true
+        });
+      }
+      if (interaction.guild.members.me?.voice?.channel) {
+        if (currentChannel !== interaction.guild.members.me?.voice?.channelId)
+          return interaction.reply({
+            content: '**☝️ You need to be in the same voice channel as me.**',
+            ephemeral: true
+          });
+      }
     }
 
     try {
@@ -25,6 +37,12 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
         client
       });
     } catch (err) {
+      await interaction
+        .reply({
+          content: '**☝️ There was a error while executing this command, i already reported it for my developers please be patient while is gets solved!**',
+          ephemeral: true
+        })
+        .catch(() => {});
       client.logger.error(`Error in command ${command.name}\n${err}`, { tags: ['Command'] });
     }
   }
