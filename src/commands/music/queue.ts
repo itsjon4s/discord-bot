@@ -9,7 +9,6 @@ export default new Command({
   description: '🎶 › See the list of songs that are going to play.',
   playerOnly: true,
   sameChannelOnly: false,
-  options: [],
   aliases: ['q', 'fila'],
   dmPermission: false,
   exec({ context, client }) {
