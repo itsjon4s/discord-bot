@@ -5,7 +5,7 @@ import { Queue } from '../../structures/Queue';
 
 export default new Command({
   name: 'play',
-  description: 'Add a song/playlist to the queue',
+  description: '🎶 › Add a song/playlist to the queue.',
   playerOnly: false,
   sameChannelOnly: true,
   ownerOnly: false,

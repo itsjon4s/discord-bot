@@ -4,7 +4,7 @@ import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'volume',
-  description: 'Change the volume of the music.',
+  description: '🎶 › Change the volume of the music.',
   playerOnly: true,
   sameChannelOnly: true,
   options: [

@@ -3,7 +3,7 @@ import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'disconnect',
-  description: 'Disconnects the bot from the voice channel and destroy the queue.',
+  description: '🎶 › Disconnects the bot from the voice channel and destroy the queue.',
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,

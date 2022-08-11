@@ -4,7 +4,7 @@ import { Queue } from '../../structures/Queue';
 
 export default new Command({
   name: 'shuffle',
-  description: 'Shuffles the queue.',
+  description: '🎶 › Shuffles the queue.',
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,

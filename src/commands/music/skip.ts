@@ -3,7 +3,7 @@ import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'skip',
-  description: 'Skips the current track.',
+  description: '🎶 › Skips the current track.',
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
