@@ -21,11 +21,11 @@ export default class CommandContext {
         return this.interaction.editReply(Object.assign(opts, { fetchReply: true }) as InteractionReplyOptions);
       }
       return this.interaction.reply(Object.assign(opts, { fetchReply: true }) as InteractionReplyOptions);
-    } else if (this.interaction instanceof Message) {
-      return this.interaction.reply(opts as ReplyMessageOptions);
-    } else {
-      return null;
     }
+    if (this.interaction instanceof Message) {
+      return this.interaction.reply(opts as ReplyMessageOptions);
+    }
+    return null;
   }
 
   public get user(): User {

@@ -1,5 +1,4 @@
 import { Command } from '../../structures/Command';
-import play from './play';
 
 export default new Command({
   name: 'loop',
