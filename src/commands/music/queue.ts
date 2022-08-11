@@ -1,5 +1,6 @@
-import { ApplicationCommandOptionType, Colors, EmbedBuilder, User } from 'discord.js';
+import { Colors, EmbedBuilder, User } from 'discord.js';
 import { Player } from 'vulkava';
+import { shorten } from '../../functions/text';
 import { Command } from '../../structures/Command';
 import { Queue } from '../../structures/Queue';
 
@@ -8,20 +9,15 @@ export default new Command({
   description: 'See the list of songs that are going to play',
   playerOnly: true,
   sameChannelOnly: false,
-  options: [
-    {
-      name: 'page',
-      description: 'The page you wanna see',
-      type: ApplicationCommandOptionType.Number,
-      required: false
-    }
-  ],
-  exec({ interaction, client }) {
-    const player = client.manager.players.get(interaction.guildId) as Player;
+  options: [],
+  aliases: ['q', 'fila'],
+  dmPermission: false,
+  exec({ context, client }) {
+    const player = client.manager.players.get(context.guild.id) as Player;
     const queue = player.queue as Queue;
 
-    const multiple = 10;
-    const page = interaction.options.getNumber('page') ?? 1;
+    const multiple = 15;
+    const page = 1;
     const end = page * multiple;
     const start = end - multiple;
 
@@ -29,18 +25,22 @@ export default new Command({
     const requester = current?.requester as User;
 
     if (queue.size === 0 && !current)
-      return interaction.reply({
+      return context.reply({
         content: '☝️ There is nothing playing and the queue is empty',
         ephemeral: true
       });
 
     const embed = new EmbedBuilder()
+      .setAuthor({
+        name: `Queue - ${context.guild.name}`,
+        iconURL: context.guild.iconURL()
+      })
+      .setDescription(queue.size > 0 ? queue.getTracksData(start, end) : '😔 The queue is empty')
       .setColor(Colors.DarkGrey)
-      .setDescription(queue.getTracksData(start, end).trim().length > 0 ? queue.getTracksData(start, end) : '**😔 There is no songs in this page**')
       .addFields(
         {
           name: '🛰️ Currently Playing',
-          value: `**${current.title}**, resquested by \`${requester.tag}\``,
+          value: `**${shorten(current.title, 15)}**, resquested by \`${requester.tag}\``,
           inline: true
         },
         {
@@ -50,7 +50,7 @@ export default new Command({
         }
       );
 
-    return interaction.reply({
+    return context.reply({
       embeds: [embed]
     });
   }

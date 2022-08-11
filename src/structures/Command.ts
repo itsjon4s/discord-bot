@@ -1,8 +1,9 @@
-import { Awaitable, ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'discord.js';
+import { Awaitable, ChatInputApplicationCommandData } from 'discord.js';
 import { Siesta } from './Client';
+import CommandContext from './CommandContext';
 
 interface ExecuteOptions {
-  interaction: ChatInputCommandInteraction;
+  context: CommandContext;
   client: Siesta;
 }
 
@@ -11,6 +12,7 @@ export type CommandType = {
   playerOnly?: boolean;
   ownerOnly?: boolean;
   sameChannelOnly?: boolean;
+  aliases?: string[];
 } & ChatInputApplicationCommandData;
 
 export class Command {

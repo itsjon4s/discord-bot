@@ -15,16 +15,18 @@ export default new Command({
       required: true
     }
   ],
-  exec({ interaction, client }) {
-    const player = client.manager.players.get(interaction.guildId) as Player;
-    const volume: number = interaction.options.getNumber('number');
+  dmPermission: false,
+  exec({ context, client }) {
+    const player = client.manager.players.get(context.guild.id) as Player;
+    const volume = Number(context.args[0]);
     if (volume <= 0 || volume > 500)
-      return interaction.reply({
-        content: '**☝️ The volume must be bettewn `0` and `500`.**'
+      return context.reply({
+        content: '**☝️ The volume must be bettewn `0` and `500`.**',
+        ephemeral: true
       });
 
     player.filters.setVolume(volume);
-    return interaction.reply({
+    return context.reply({
       content: `🎤 The volume has been set to \`${volume}\``
     });
   }

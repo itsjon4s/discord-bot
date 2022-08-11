@@ -1,16 +1,18 @@
 import { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Vulkava } from 'vulkava';
-import { IncomingDiscordPayload, OutgoingDiscordPayload } from 'vulkava/lib/@types';
+import { IncomingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
 
-const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number): Promise<unknown> => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
 export class Manager extends Vulkava {
   client: Siesta;
 
   constructor(client: Siesta, nodes: NodeOptions[]) {
     super({
       nodes,
-      sendWS: (guildId: string, payload: OutgoingDiscordPayload) => client.guilds.cache.get(guildId)?.shard.send(payload)
+      sendWS: (guildId, payload) => client.guilds.cache.get(guildId)?.shard.send(payload)
     });
 
     this.client = client;
@@ -46,6 +48,7 @@ export class Manager extends Vulkava {
         channel.send({
           content: "**🔇 I wasn't playing for 3 minutes so i left the channel.**"
         });
+        player.destroy();
       }
     });
 

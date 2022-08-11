@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-constructor */
 import { User } from 'discord.js';
-import { DefaultQueue } from 'vulkava';
+import { DefaultQueue, Track } from 'vulkava';
+import { shorten } from '../functions/text';
 
 export class Queue extends DefaultQueue {
   constructor() {
@@ -20,15 +21,9 @@ export class Queue extends DefaultQueue {
     let pos = start;
     for (; pos < end && this.tracks[pos]; pos++) {
       const req = this.tracks[pos].requester as User;
-      const track = this.tracks[pos];
-      data.push(`**${pos + 1} - [${this.shorten(track.title, 12)}](${track.uri}) < ${req.toString()} >**`);
+      const track = this.tracks[pos] as Track;
+      data.push(`**${pos + 1} - [${shorten(track.title, 12)}](${track.uri}) < ${req.toString()} >**`);
     }
     return data.join('\n');
-  }
-
-  private shorten(text: string, size: number) {
-    if (typeof text !== 'string') return '';
-    if (text.length <= size) return text;
-    return `${text.slice(0, size).trim()}...`;
   }
 }

@@ -6,11 +6,13 @@ export default new Command({
   description: 'Disconnects the bot from the voice channel and destroy the queue.',
   playerOnly: true,
   sameChannelOnly: true,
-  exec({ interaction, client }) {
-    const player = client.manager.players.get(interaction.guildId) as Player;
+  dmPermission: false,
+  aliases: ['dc', 'leave', 'stop'],
+  exec({ context, client }) {
+    const player = client.manager.players.get(context.guild.id) as Player;
     player.destroy();
 
-    return interaction.reply({
+    return context.reply({
       content: "**🐬 Disconnected from the voice channel sucessfully, hope you've enjoyed it!**"
     });
   }

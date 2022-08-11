@@ -1,8 +1,9 @@
 /* eslint-disable consistent-return */
 import { client } from '..';
 import { Event } from '../structures/Event';
-import { AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction } from 'discord.js';
+import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction } from 'discord.js';
 import { request } from 'undici';
+import CommandContext from '../structures/CommandContext';
 
 export default new Event('interactionCreate', async (interaction: Interaction) => {
   if (interaction instanceof ChatInputCommandInteraction) {
@@ -30,20 +31,33 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
       }
     }
 
+    const args = [];
+
+    for (const option of interaction.options.data) {
+      if (option.type === ApplicationCommandOptionType.Subcommand) {
+        if (option.name) args.push(option.name);
+        option.options?.forEach(x => {
+          if (x.value) args.push(x.value);
+        });
+      } else if (option.value) args.push(option.value);
+    }
+
+    const context = new CommandContext(client, interaction, args);
+
     try {
       await command.exec({
-        interaction,
+        context,
         client
       });
     } catch (err) {
       if (err instanceof Error) {
-        await interaction
+        await context
           .reply({
             content: '**☝️ There was a error while executing this command, i already reported it for my developers please be patient while is gets solved!**',
             ephemeral: true
           })
           .catch(() => {});
-        client.logger.error(`Error in command ${command.name}\n${err.message}`, { tags: ['Command'] });
+        client.logger.warn(`Error in command ${command.name}\n${err.stack}`, { tags: ['Command'] });
       }
     }
   }

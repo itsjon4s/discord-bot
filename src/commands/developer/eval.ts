@@ -17,17 +17,18 @@ export default new Command({
       required: true
     }
   ],
-  async exec({ interaction, client }) {
+  dmPermission: true,
+  async exec({ context, client }) {
     try {
-      const res = await eval(interaction.options.getString('code'));
+      const res = await eval(context.args.join(' '));
       const cleanResult = typeof res !== 'string' ? inspect(res, { depth: 0 }).replaceAll(client.token, '*') : res.replaceAll(client.token, '*');
-      return interaction.reply({
+      return context.reply({
         content: `\`\`\`js\n${cleanResult.slice(0, 1900)}\`\`\``,
         ephemeral: true
       });
     } catch (err) {
       if (err instanceof Error) {
-        return interaction.reply({
+        return context.reply({
           content: `\`\`\`js\n${err.stack}\`\`\``,
           ephemeral: true
         });
