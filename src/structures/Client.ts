@@ -32,7 +32,11 @@ export class Siesta extends Client {
         UserManager: 0
       }),
       intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates],
-      presence: { status: config.enviroment === 'dev' ? 'idle' : 'online' }
+      presence: { status: config.enviroment === 'dev' ? 'idle' : 'online' },
+      allowedMentions: {
+        parse: ['users'],
+        repliedUser: false
+      }
     });
     this.commands = new Collection();
     this.aliases = new Collection();
