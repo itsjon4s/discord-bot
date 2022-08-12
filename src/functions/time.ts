@@ -10,15 +10,15 @@ export const formatTime = (ms: number) => {
   seconds %= 60;
 
   if (days) {
-    return `${days}d, ${hours}h, ${minutes}m, ${seconds}s`;
+    return `${days}d, ${hours}h, ${minutes}m, ${seconds.toFixed()}s`;
   }
   if (hours) {
-    return `${hours}h, ${minutes}m, ${seconds}s`;
+    return `${hours}h, ${minutes}m, ${seconds.toFixed()}s`;
   }
   if (minutes) {
-    return `${minutes}m, ${seconds}s`;
+    return `${minutes}m, ${seconds.toFixed()}s`;
   }
-  return `${seconds}s`;
+  return `${seconds.toFixed()}s`;
 };
 
 export const timeToMS = (time: string) => {
