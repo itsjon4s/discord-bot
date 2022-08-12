@@ -11,12 +11,12 @@ export default new Command({
     const player = client.manager.players.get(context.guild.id) as Player;
     if (!player.current)
       context.reply({
-        content: "☝️ The isn't any song playing right now."
+        content: "**☝️ The isn't any song playing right now.**"
       });
 
     player.seek(0);
     context.reply({
-      content: '🎤 Restarted the music sucessfully.'
+      content: '**🎤 Restarted the track sucessfully.**'
     });
   }
 });

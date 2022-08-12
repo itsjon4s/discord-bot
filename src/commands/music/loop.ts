@@ -11,7 +11,7 @@ export default new Command({
 
     if (!player.current) {
       context.reply({
-        content: "☝️ There isn't anything playing right now."
+        content: "**☝️ There isn't anything playing right now.**"
       });
     }
 
@@ -19,13 +19,13 @@ export default new Command({
       player.setQueueLoop(!player.queueRepeat);
       player.setTrackLoop(false);
       context.reply({
-        content: `🎤 ${player.queueRepeat ? 'Enabled' : 'Disabled'} queue loop.`
+        content: `**🎤 ${player.queueRepeat ? 'Enabled' : 'Disabled'} queue loop.**`
       });
     } else {
       player.setQueueLoop(false);
       player.setTrackLoop(!player.trackRepeat);
       context.reply({
-        content: `🎤 ${player.trackRepeat ? 'Enabled' : 'Disabled'} track loop.`
+        content: `**🎤 ${player.trackRepeat ? 'Enabled' : 'Disabled'} track loop.**`
       });
     }
   }
