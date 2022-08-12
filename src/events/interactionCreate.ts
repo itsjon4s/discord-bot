@@ -4,6 +4,7 @@ import { Event } from '../structures/Event';
 import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction, SelectMenuInteraction } from 'discord.js';
 import { request } from 'undici';
 import CommandContext from '../structures/CommandContext';
+import chalk from 'chalk';
 
 export default new Event('interactionCreate', async (interaction: Interaction) => {
   if (interaction instanceof ChatInputCommandInteraction) {
@@ -44,6 +45,9 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
 
     const context = new CommandContext(client, interaction, args);
 
+    client.logger.info(`Command ${chalk.bold(command.name)} used in ${chalk.bold(context.guild.name)} by ${chalk.bold(context.user.username)}`, {
+      tags: ['Command']
+    })
     try {
       await command.exec({
         context,

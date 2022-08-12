@@ -2,8 +2,9 @@ import { GuildMember } from 'discord.js';
 import { client } from '..';
 import CommandContext from '../structures/CommandContext';
 import { Event } from '../structures/Event';
+import chalk from 'chalk';
 
-export default new Event('messageCreate', async (message) => {
+export default new Event('messageCreate', async message => {
   if (!message.guild || message.author.bot) return;
 
   let prefix: string;
@@ -52,6 +53,11 @@ export default new Event('messageCreate', async (message) => {
   }
 
   const context = new CommandContext(client, message, args);
+
+  client.logger.info(`Command ${chalk.bold(command.name)} used in ${chalk.bold(context.guild.name)} by ${chalk.bold(context.user.username)}`, {
+    tags: ['Command']
+  });
+
   try {
     await command.exec({
       context,
