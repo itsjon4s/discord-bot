@@ -19,7 +19,7 @@ export default new Command({
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
     const volume = Number(context.args[0]);
-    if (volume <= 0 || volume > 500)
+    if (volume <= 0 || volume > 500 || isNaN(volume))
       return context.reply({
         content: '**☝️ The volume must be bettewn `0` and `500`.**',
         ephemeral: true
@@ -27,7 +27,7 @@ export default new Command({
 
     player.filters.setVolume(volume);
     return context.reply({
-      content: `🎤 The volume has been set to \`${volume}\``
+      content: `**🎤 The volume has been set to \`${volume}\`.**`
     });
   }
 });

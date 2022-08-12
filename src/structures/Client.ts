@@ -13,6 +13,7 @@ const globPromise = promisify(glob);
 
 export class Siesta extends Client {
   public commands: Collection<string, CommandType>;
+  public aliases: Collection<string, string>;
   public logger: Logger;
   public manager: Manager;
 
@@ -34,6 +35,7 @@ export class Siesta extends Client {
       presence: { status: config.enviroment === 'dev' ? 'idle' : 'online' }
     });
     this.commands = new Collection();
+    this.aliases = new Collection();
     this.manager = new Manager(this, config.nodes);
   }
 
@@ -66,6 +68,11 @@ export class Siesta extends Client {
       const command: CommandType = await this.importFile(file);
       if (!command.name) return;
       this.commands.set(command.name, command);
+      if (command.aliases) {
+        command.aliases.forEach(alias => {
+          this.aliases.set(alias, command.name);
+        });
+      }
       slashCommands.push(command);
     });
 

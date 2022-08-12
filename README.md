@@ -1,3 +1,16 @@
+<h2 align="center"> ━━━━━━  ❖  ━━━━━━ </h2>
+
+<div align="center">
+   <a href="https://github.com/itsjon4s/SiestaRewrite/stargazers">
+      <img src="https://img.shields.io/github/stars/yJon4ss/SiestaRewrite?color=%23ffb29b&labelColor=%23101415&style=for-the-badge">
+   </a>
+   <a href="https://github.com/itsjon4s/SiestaRewrite/network/members/">
+      <img src="https://img.shields.io/github/forks/itsjon4s/SiestaRewrite?color=%23A2B7EE&labelColor=%23101415&style=for-the-badge">
+   </a>
+   <a href="https://github.com/itsjon4s/SiestaRewrite/">
+      <img src="https://img.shields.io/github/repo-size/itsjon4s/SiestaRewrite?color=%23ee6a70&labelColor=%23101415&style=for-the-badge">
+   </a>
+</div>
 # 🐬 Siesta
 > Siesta is a music bot, made with [TypeScript](https://www.typescriptlang.org/) and [Node.js](https://nodejs.org/)
 # **💻 Self Hosting**

@@ -22,8 +22,15 @@ export default new Command({
   dmPermission: false,
   async exec({ context, client }) {
     let player = client.manager.players.get(context.guild.id);
-    const song = context.args.join(' ');
 
+    if (!context.args[0]) {
+      return context.reply({
+        content: '**☝️ You must send the song name or url to add to the queue**'
+      });
+    }
+    
+    const song = context.args.join(' ');
+    
     const res: SearchResult = await client.manager.search(song);
 
     if (res.loadType === 'NO_MATCHES')

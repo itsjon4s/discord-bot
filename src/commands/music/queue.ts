@@ -9,7 +9,7 @@ export default new Command({
   description: '🎶 › See the list of songs that are going to play.',
   playerOnly: true,
   sameChannelOnly: false,
-  aliases: ['q', 'fila'],
+  aliases: ['q', 'fila', 'nowplaying', 'np'],
   dmPermission: false,
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
