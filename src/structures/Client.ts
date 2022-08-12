@@ -8,6 +8,7 @@ import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
 import { Manager } from './Music';
+import { PrismaClient } from '@prisma/client';
 
 const globPromise = promisify(glob);
 
@@ -16,6 +17,7 @@ export class Siesta extends Client {
   public aliases: Collection<string, string>;
   public logger: Logger;
   public manager: Manager;
+  public db: PrismaClient;
 
   constructor() {
     super({
@@ -41,6 +43,7 @@ export class Siesta extends Client {
     this.commands = new Collection();
     this.aliases = new Collection();
     this.manager = new Manager(this, config.nodes);
+    this.db = new PrismaClient();
   }
 
   init() {
@@ -62,6 +65,7 @@ export class Siesta extends Client {
   registerModules() {
     this.loadCommands();
     this.loadEvents();
+    this.db.$connect()
   }
 
   async loadCommands() {
@@ -83,7 +87,7 @@ export class Siesta extends Client {
     this.logger.info(`Loaded ${commandFiles.length} commands successfully!`, { tags: ['Commands'] });
 
     this.on('ready', () => {
-      if (config.enviroment === 'prod') client.application.commands.set(slashCommands);
+      if (config.enviroment === 'prod') this.application.commands.set(slashCommands);
     });
   }
 

@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type GuildsAntiinvite {
+  status    Boolean
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  whitelist Json?
+}
+
+type GuildsWelcome {
+  channel String?
+  message String?
+  status  Boolean
+}
+
+
+model guilds {
+  id         String           @id @map("_id")
+  v          Int              @map("__v")
+  antiinvite GuildsAntiinvite
+  prefix     String @default('<')
+  welcome    GuildsWelcome
+}
+
+model users {
+  id              String          @id @map("_id")
+  v               Int             @map("__v")
+  blacklist       Boolean
+}

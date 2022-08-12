@@ -9,13 +9,18 @@ export default new Event('messageCreate', async (message) => {
   let prefix: string;
 
   const mentionRegex = message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'));
+  const guildDb = client.db.guilds.findFirst({
+    where: {
+      id: message.guild.id
+    }
+  });
 
   if (message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'))) {
     prefix = String(mentionRegex);
   } else if (message.content.toLowerCase().startsWith('siesta')) {
     prefix = 'siesta';
   } else {
-    prefix = '<';
+    prefix = (await guildDb)?.prefix ?? '<';
   }
 
   if (!message.content.toLowerCase().startsWith(prefix)) return;
