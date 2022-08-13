@@ -9,7 +9,6 @@ datasource db {
 
 type GuildsAntiinvite {
   status    Boolean
-  /// Could not determine type: the field only had null or empty values in the sample set.
   whitelist Json?
 }
 
@@ -24,7 +23,7 @@ model guilds {
   id         String           @id @map("_id")
   v          Int              @map("__v")
   antiinvite GuildsAntiinvite
-  prefix     String
+  prefix     String 
   welcome    GuildsWelcome
 }
 
