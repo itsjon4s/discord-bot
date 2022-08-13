@@ -3,9 +3,7 @@ import { Node, NodeOptions, Vulkava } from 'vulkava';
 import { IncomingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
 
-const sleep = (ms: number): Promise<unknown> => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 export class Manager extends Vulkava {
   client: Siesta;
 

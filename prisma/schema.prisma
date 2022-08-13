@@ -24,7 +24,7 @@ model guilds {
   id         String           @id @map("_id")
   v          Int              @map("__v")
   antiinvite GuildsAntiinvite
-  prefix     String @default('<')
+  prefix     String
   welcome    GuildsWelcome
 }
 

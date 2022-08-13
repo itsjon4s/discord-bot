@@ -65,7 +65,7 @@ export class Siesta extends Client {
   registerModules() {
     this.loadCommands();
     this.loadEvents();
-    this.db.$connect()
+    this.db.$connect();
   }
 
   async loadCommands() {

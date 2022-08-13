@@ -17,7 +17,7 @@ export default new Command({
   ],
   async exec({ context, client }) {
     if (!context.member.permissions.has('ManageGuild')) {
-      context.reply({
+      return context.reply({
         content: '**☝️ You need have the `Manage Guild` permission to execute this command.**'
       });
     }
@@ -25,13 +25,13 @@ export default new Command({
     const newPrefix: string = context.args[0];
 
     if (!newPrefix) {
-      context.reply({
+      return context.reply({
         content: '**☝️ You need to put the new prefix after the command**'
       });
     }
 
     if (newPrefix.length > 3) {
-      context.reply({
+      return context.reply({
         content: '**☝️ The prefix lenght must be lower than 3**'
       });
     }
@@ -45,7 +45,7 @@ export default new Command({
       }
     });
 
-    context.reply({
+    return context.reply({
       content: `**📝 The prefix was sucessfully changed to \`${newPrefix}\`.**`
     });
   }

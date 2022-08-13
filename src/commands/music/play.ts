@@ -28,9 +28,9 @@ export default new Command({
         content: '**☝️ You must send the song name or url to add to the queue**'
       });
     }
-    
+
     const song = context.args.join(' ');
-    
+
     const res: SearchResult = await client.manager.search(song);
 
     if (res.loadType === 'NO_MATCHES')

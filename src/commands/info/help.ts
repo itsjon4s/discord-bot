@@ -14,6 +14,9 @@ export default new Command({
     const informationCommands = readdirSync(`${process.cwd()}/src/commands/info`).map(file => {
       return `\`${file.replace('.ts', '').replace('js', '')}\``;
     });
+    const configurationCommands = readdirSync(`${process.cwd()}/src/commands/configs`).map(file => {
+      return `\`${file.replace('.ts', '').replace('js', '')}\``;
+    });
 
     const embed = new EmbedBuilder()
       .setThumbnail(client.user.displayAvatarURL())
@@ -32,6 +35,10 @@ export default new Command({
         {
           name: `🎤 Music Commands [${musicCommands.length}]`,
           value: musicCommands.join(', ')
+        },
+        {
+          name: `📝 Configuration Commands [${configurationCommands.length}]`,
+          value: configurationCommands.join(', ')
         }
       );
 

@@ -47,7 +47,7 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
 
     client.logger.info(`Command ${chalk.bold(command.name)} used in ${chalk.bold(context.guild.name)} by ${chalk.bold(context.user.username)}`, {
       tags: ['Command']
-    })
+    });
     try {
       await command.exec({
         context,

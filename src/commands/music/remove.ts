@@ -26,7 +26,7 @@ export default new Command({
         content: '☝️ The queue is empty'
       });
     }
-    
+
     // i finish this later
   }
 });
