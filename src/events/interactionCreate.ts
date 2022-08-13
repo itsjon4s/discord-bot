@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { client } from '..';
 import { Event } from '../structures/Event';
-import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction, SelectMenuInteraction } from 'discord.js';
+import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction } from 'discord.js';
 import { request } from 'undici';
 import CommandContext from '../structures/CommandContext';
 import chalk from 'chalk';

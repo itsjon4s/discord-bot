@@ -5,11 +5,10 @@ export default new Command({
   name: 'invite',
   description: '🛰️ › Replies with the bot invite',
   dmPermission: true,
-  exec({ context, client }) {
+  exec({ context }) {
     const button = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
       .setLabel('Invite me!')
-      // .setEmoji({ name: '❤️' })
       .setURL('https://discord.com/api/oauth2/authorize?client_id=907747074118926347&permissions=271641686&scope=applications.commands%20bot');
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents([button]);
 

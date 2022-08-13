@@ -1,7 +1,6 @@
 import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Options } from 'discord.js';
 import glob from 'glob';
 import { promisify } from 'util';
-import { client } from '..';
 // @ts-ignore
 import config from '../../config';
 import { CommandType } from './Command';

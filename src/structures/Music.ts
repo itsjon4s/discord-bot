@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 import { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Vulkava } from 'vulkava';
 import { IncomingDiscordPayload } from 'vulkava/lib/@types';
