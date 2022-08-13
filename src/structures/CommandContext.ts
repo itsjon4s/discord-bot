@@ -23,9 +23,6 @@ export default class CommandContext {
       return this.interaction.reply(Object.assign(opts, { fetchReply: true }) as InteractionReplyOptions);
     }
     if (this.interaction instanceof Message) {
-      if (!this.channel.permissionsFor(this.client.user.id).has('ReadMessageHistory')) {
-        return this.interaction.reply(opts as ReplyMessageOptions);
-      }
       return this.interaction.reply(opts as ReplyMessageOptions);
     }
     return null;
@@ -34,8 +31,9 @@ export default class CommandContext {
   public get user(): User {
     if (this.interaction instanceof Message) {
       return this.interaction.author;
+    } else {
+      return this.interaction.user;
     }
-    return this.interaction.user;
   }
 
   public get guild(): Guild {

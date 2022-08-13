@@ -21,12 +21,18 @@ export default new Command({
     const player = client.manager.players.get(context.guild.id) as Player;
     const queue = player.queue as Queue;
 
-    if (queue.size === 0) {
-      context.reply({
-        content: '☝️ The queue is empty'
+    if (!context.args[0] || isNaN(Number(context.args[0])) || Number(context.args[0]) > queue.size || Number(context.args[0]) < 0) {
+      return context.reply({
+        content: '**☝️ You must send a valid song number to remove from the queue.**',
+        ephemeral: true
       });
     }
 
-    // i finish this later
+    const track = queue.getTrack(Number(context.args[0]));
+    queue.removeTrack(Number(context.args[0]));
+
+    return context.reply({
+      content: `**🎤 Sucessfuly removed the track \`${track.title}\` from the queue!`
+    });
   }
 });
