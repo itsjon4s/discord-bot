@@ -5,3 +5,4 @@ logs/
 package-lock.json
 *lock
 config.ts
+.env
