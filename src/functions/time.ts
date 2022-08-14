@@ -60,3 +60,12 @@ export const timeToMS = (time: string) => {
 
   return formatted.reduce((acc, curr) => acc + parseInt(curr.substring(0, curr.length - 1), 10) * convertions[curr[curr.length - 1]], 0);
 };
+
+export function convertMs(ms: number) {
+  const seconds = ~~(ms/1000)
+  const minutes = ~~(seconds/60)
+  const hours = ~~(minutes/60)
+  const days = ~~(hours/24)
+
+  return { days, hours: hours%24, minutes: minutes%60, seconds: seconds%60 }
+}

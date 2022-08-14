@@ -7,8 +7,8 @@ import { Event } from '../structures/Event';
 const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 
 export default new Event('voiceStateUpdate', async (oldState, newState) => {
-  const channel = newState.guild.channels.cache.get(newState.channel?.id ?? newState.channelId);
-  const player = client.manager.players.get(channel.guild.id);
+  const channel = newState.guild.channels.cache.get(newState.channelId);
+  const player = client.manager.players.get(oldState.guild.id);
 
   if (!player) return;
   if (newState.id === client.user.id && channel?.type === ChannelType.GuildStageVoice) {

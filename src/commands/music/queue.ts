@@ -1,6 +1,7 @@
 import { Colors, EmbedBuilder, User } from 'discord.js';
 import { Player } from 'vulkava';
 import { shorten } from '../../functions/text';
+import { convertMs } from '../../functions/time';
 import { Command } from '../../structures/Command';
 import { Queue } from '../../structures/Queue';
 
@@ -39,7 +40,11 @@ export default new Command({
       .addFields(
         {
           name: '🛰️ Currently Playing',
-          value: `**${shorten(current.title, 15)}**, resquested by \`${requester.tag}\``,
+          value: `**${shorten(current.title, 15)}**, resquested by \`${requester.tag}\`\n**${formatTime(convertMs(player.position))} \`${progressBar(
+            player.position / 1000 / 50,
+            current.duration / 1000 / 50,
+            20
+          )}\` ${formatTime(convertMs(current.duration))}**`,
           inline: true
         },
         {
@@ -54,3 +59,17 @@ export default new Command({
     });
   }
 });
+
+function progressBar(current: number, total: number, barSize: number) {
+  const progress = Math.round((barSize * current) / total);
+
+  return '━'.repeat(progress > 0 ? progress - 1 : progress) + '⚪' + '─'.repeat(barSize - progress);
+}
+
+function formatTime(time: object, format = 'dd:hh:mm:ss') {
+  const formats = { dd: 'days', hh: 'hours', mm: 'minutes', ss: 'seconds' };
+
+  const newFormat = format.replace(/dd|hh|mm|ss/g, match => time[formats[match]].toString().padStart(2, '0')).replace(/^(00:)+/g, '');
+
+  return newFormat.length > 2 ? newFormat : '00:' + newFormat;
+}
