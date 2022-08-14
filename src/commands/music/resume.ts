@@ -2,11 +2,12 @@ import { Player } from 'vulkava';
 import { Command } from '../../structures/Command';
 
 export default new Command({
-  name: 'pause',
-  description: '🎶 › Pauses the player.',
+  name: 'resume',
+  description: '🎶 › Resumes the player.',
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  aliases: ['unpause'],
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
 
@@ -16,9 +17,9 @@ export default new Command({
       });
     }
 
-    player.pause(true);
+    player.pause(false);
     context.reply({
-      content: '**🎤 The player was paused sucessfully.**'
+      content: '**🎤 The player was resumed sucessfully.**'
     });
   }
 });

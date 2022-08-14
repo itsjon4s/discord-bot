@@ -11,11 +11,12 @@ export default new Command({
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
 
-    if (player.queue.size === 0)
+    if (!player.current) {
       return context.reply({
-        content: "**☝️ The queue is empty so there's no tracks to be skiped**",
+        content: '**☝️ There is nothing playing.**',
         ephemeral: true
       });
+    }
 
     player.skip();
 

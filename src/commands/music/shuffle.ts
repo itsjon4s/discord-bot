@@ -11,9 +11,16 @@ export default new Command({
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
 
+    if (player.queue.size === 0) {
+      return context.reply({
+        content: "**☝️ The queue is empty so there's no tracks to be skiped**",
+        ephemeral: true
+      });
+    }
+
     (player.queue as Queue).shuffle();
     return context.reply({
-      content: '🕯️ The queue was shuffled sucessfully'
+      content: '**🕯️ The queue was shuffled sucessfully**'
     });
   }
 });

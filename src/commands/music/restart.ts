@@ -9,10 +9,12 @@ export default new Command({
   sameChannelOnly: true,
   exec({ context, client }) {
     const player = client.manager.players.get(context.guild.id) as Player;
-    if (!player.current)
-      context.reply({
+
+    if (!player.current) {
+      return context.reply({
         content: "**☝️ The isn't any song playing right now.**"
       });
+    }
 
     player.seek(0);
     context.reply({
