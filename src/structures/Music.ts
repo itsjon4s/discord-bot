@@ -42,7 +42,7 @@ export class Manager extends Vulkava {
 
     this.on('queueEnd', async player => {
       await sleep(3 * 60 * 1000);
-      if (this.players.get(player.guildId) && this.players.get(player.guildId).queue.size === 0) {
+      if (this.players.get(player.guildId) && this.players.get(player.guildId).queue.size === 0 && !this.players.get(player.guildId).playing) {
         const channel = this.client.channels.cache.get(player.textChannelId) as TextChannel;
         channel.send({
           content: "**🔇 I wasn't playing for 3 minutes so i left the channel.**"
