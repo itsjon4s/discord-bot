@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
-import { User } from 'discord.js';
 import { DefaultQueue, Track } from 'vulkava';
 import { shorten } from '../functions/text';
+import { convertMs } from '../functions/time';
 
 export class Queue extends DefaultQueue {
   constructor() {
@@ -20,10 +20,17 @@ export class Queue extends DefaultQueue {
     const data = [];
     let pos = start;
     for (; pos < end && this.tracks[pos]; pos++) {
-      const req = this.tracks[pos].requester as User;
       const track = this.tracks[pos] as Track;
-      data.push(`**${pos + 1} - [${shorten(track.title, 12)}](${track.uri}) < ${req.toString()} >**`);
+      data.push(`**${pos + 1} - [${shorten(track.title, 12)}](${track.uri}) \`[${formatTime(convertMs(track.duration))}]\`**`);
     }
     return data.join('\n');
   }
+}
+
+function formatTime(time: object, format = 'dd:hh:mm:ss') {
+  const formats = { dd: 'days', hh: 'hours', mm: 'minutes', ss: 'seconds' };
+
+  const newFormat = format.replace(/dd|hh|mm|ss/g, match => time[formats[match]].toString().padStart(2, '0')).replace(/^(00:)+/g, '');
+
+  return newFormat.length > 2 ? newFormat : '00:' + newFormat;
 }

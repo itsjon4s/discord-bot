@@ -40,18 +40,18 @@ export default new Command({
       .addFields(
         {
           name: '🛰️ Currently Playing',
-          value: `**${shorten(current.title, 15)}**, resquested by \`${requester.tag}\`\n**${formatTime(convertMs(player.position))} \`${progressBar(
-            player.position / 1000 / 50,
-            current.duration / 1000 / 50,
-            20
-          )}\` ${formatTime(convertMs(current.duration))}**`,
+          value: `${shorten(current.title, 15)}, **Resquested by:** \`${requester.tag}\`\n${
+            current.isStream
+              ? '**🔴 LIVE**'
+              : `**${formatTime(convertMs(player.position))} \`${progressBar(player.position / 1000 / 50, current.duration / 1000 / 50, 20)}\` ${formatTime(convertMs(current.duration))}**`
+          }`,
           inline: true
         },
         {
           name: '🕯️Queue size',
           value: `**${queue.size} songs**`,
           inline: true
-        }
+        },
       );
 
     return context.reply({
