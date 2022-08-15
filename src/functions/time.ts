@@ -62,10 +62,10 @@ export const timeToMS = (time: string) => {
 };
 
 export function convertMs(ms: number) {
-  const seconds = ~~(ms/1000)
-  const minutes = ~~(seconds/60)
-  const hours = ~~(minutes/60)
-  const days = ~~(hours/24)
+  const seconds = ~~(ms / 1000);
+  const minutes = ~~(seconds / 60);
+  const hours = ~~(minutes / 60);
+  const days = ~~(hours / 24);
 
-  return { days, hours: hours%24, minutes: minutes%60, seconds: seconds%60 }
+  return { days, hours: hours % 24, minutes: minutes % 60, seconds: seconds % 60 };
 }

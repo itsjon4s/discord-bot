@@ -1,4 +1,3 @@
-import { Player } from 'vulkava';
 import { Command } from '../../structures/Command';
 
 export default new Command({
@@ -8,9 +7,8 @@ export default new Command({
   sameChannelOnly: true,
   dmPermission: false,
   aliases: ['dc', 'leave', 'stop'],
-  exec({ context, client }) {
-    const player = client.manager.players.get(context.guild.id) as Player;
-    player.destroy();
+  exec({ context }) {
+    context.player.destroy();
 
     return context.reply({
       content: "**🐬 Disconnected from the voice channel sucessfully, hope you've enjoyed it!**"

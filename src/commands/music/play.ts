@@ -20,7 +20,7 @@ export default new Command({
   ],
   aliases: ['p', 'tocar'],
   dmPermission: false,
-  
+
   async exec({ context, client }) {
     let player = client.manager.players.get(context.guild.id);
 

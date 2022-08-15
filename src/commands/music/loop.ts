@@ -6,26 +6,24 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
-  exec({ context, client }) {
-    const player = client.manager.players.get(context.guild.id);
-
-    if (!player.current) {
+  exec({ context }) {
+    if (!context.player.current) {
       context.reply({
         content: "**☝️ There isn't anything playing right now.**"
       });
     }
 
-    if (player.queue.size > 0) {
-      player.setQueueLoop(!player.queueRepeat);
-      player.setTrackLoop(false);
+    if (context.player.queue.size > 0) {
+      context.player.setQueueLoop(!context.player.queueRepeat);
+      context.player.setTrackLoop(false);
       context.reply({
-        content: `**🎤 ${player.queueRepeat ? 'Enabled' : 'Disabled'} queue loop.**`
+        content: `**🎤 ${context.player.queueRepeat ? 'Enabled' : 'Disabled'} queue loop.**`
       });
     } else {
-      player.setQueueLoop(false);
-      player.setTrackLoop(!player.trackRepeat);
+      context.player.setQueueLoop(false);
+      context.player.setTrackLoop(!context.player.trackRepeat);
       context.reply({
-        content: `**🎤 ${player.trackRepeat ? 'Enabled' : 'Disabled'} track loop.**`
+        content: `**🎤 ${context.player.trackRepeat ? 'Enabled' : 'Disabled'} track loop.**`
       });
     }
   }

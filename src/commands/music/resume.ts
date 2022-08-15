@@ -1,4 +1,3 @@
-import { Player } from 'vulkava';
 import { Command } from '../../structures/Command';
 
 export default new Command({
@@ -8,17 +7,15 @@ export default new Command({
   sameChannelOnly: true,
   dmPermission: false,
   aliases: ['unpause'],
-  exec({ context, client }) {
-    const player = client.manager.players.get(context.guild.id) as Player;
-
-    if (!player.current) {
+  exec({ context }) {
+    if (!context.player.current) {
       return context.reply({
         content: "☝️ There ins't any song playing right now."
       });
     }
 
-    player.pause(false);
-    context.reply({
+    context.player.pause(false);
+    return context.reply({
       content: '**🎤 The player was resumed sucessfully.**'
     });
   }

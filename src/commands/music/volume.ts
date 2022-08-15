@@ -1,5 +1,4 @@
 import { ApplicationCommandOptionType } from 'discord.js';
-import { Player } from 'vulkava';
 import { Command } from '../../structures/Command';
 
 export default new Command({
@@ -16,8 +15,7 @@ export default new Command({
     }
   ],
   dmPermission: false,
-  exec({ context, client }) {
-    const player = client.manager.players.get(context.guild.id) as Player;
+  exec({ context }) {
     const volume = Number(context.args[0]);
     if (volume <= 0 || volume > 500 || isNaN(volume))
       return context.reply({
@@ -25,7 +23,7 @@ export default new Command({
         ephemeral: true
       });
 
-    player.filters.setVolume(volume);
+    context.player.filters.setVolume(volume);
     return context.reply({
       content: `**🎤 The volume has been set to \`${volume}\`.**`
     });

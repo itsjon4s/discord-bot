@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-use-before-define */
 import { Colors, EmbedBuilder, User } from 'discord.js';
-import { Player } from 'vulkava';
 import { shorten } from '../../functions/text';
 import { convertMs } from '../../functions/time';
 import { Command } from '../../structures/Command';
@@ -12,16 +13,15 @@ export default new Command({
   sameChannelOnly: false,
   aliases: ['q', 'fila', 'nowplaying', 'np'],
   dmPermission: false,
-  exec({ context, client }) {
-    const player = client.manager.players.get(context.guild.id) as Player;
-    const queue = player.queue as Queue;
+  exec({ context }) {
+    const queue = context.player.queue as Queue;
 
     const multiple = 15;
     const page = 1;
     const end = page * multiple;
     const start = end - multiple;
 
-    const { current } = player;
+    const { current } = context.player;
     const requester = current?.requester as User;
 
     if (queue.size === 0 && !current)
@@ -43,7 +43,9 @@ export default new Command({
           value: `${shorten(current.title, 15)}, **Resquested by:** \`${requester.tag}\`\n${
             current.isStream
               ? '**🔴 LIVE**'
-              : `**${formatTime(convertMs(player.position))} \`${progressBar(player.position / 1000 / 50, current.duration / 1000 / 50, 20)}\` ${formatTime(convertMs(current.duration))}**`
+              : `**${formatTime(convertMs(context.player.position))} \`${progressBar(context.player.position / 1000 / 50, current.duration / 1000 / 50, 20)}\` ${formatTime(
+                  convertMs(current.duration)
+                )}**`
           }`,
           inline: true
         },
@@ -51,7 +53,7 @@ export default new Command({
           name: '🕯️Queue size',
           value: `**${queue.size} songs**`,
           inline: true
-        },
+        }
       );
 
     return context.reply({
@@ -63,7 +65,7 @@ export default new Command({
 function progressBar(current: number, total: number, barSize: number) {
   const progress = Math.round((barSize * current) / total);
 
-  return '━'.repeat(progress > 0 ? progress - 1 : progress) + '⚪' + '─'.repeat(barSize - progress);
+  return `${'━'.repeat(progress > 0 ? progress - 1 : progress)}⚪${'─'.repeat(barSize - progress)}`;
 }
 
 function formatTime(time: object, format = 'dd:hh:mm:ss') {
@@ -71,5 +73,5 @@ function formatTime(time: object, format = 'dd:hh:mm:ss') {
 
   const newFormat = format.replace(/dd|hh|mm|ss/g, match => time[formats[match]].toString().padStart(2, '0')).replace(/^(00:)+/g, '');
 
-  return newFormat.length > 2 ? newFormat : '00:' + newFormat;
+  return newFormat.length > 2 ? newFormat : `00:${newFormat}`;
 }
