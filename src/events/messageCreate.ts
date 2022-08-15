@@ -1,8 +1,8 @@
+import chalk from 'chalk';
 import { GuildMember } from 'discord.js';
 import { client } from '..';
 import CommandContext from '../structures/CommandContext';
 import { Event } from '../structures/Event';
-import chalk from 'chalk';
 
 export default new Event('messageCreate', async message => {
   if (!message.guild || message.author.bot) return;
@@ -10,7 +10,7 @@ export default new Event('messageCreate', async message => {
   let prefix: string;
 
   const mentionRegex = message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'));
-  const guildDb = client.db.guilds.findFirst({
+  const guildDb = await client.db.guilds.findFirst({
     where: {
       id: message.guild.id
     }
@@ -21,7 +21,13 @@ export default new Event('messageCreate', async message => {
   } else if (message.content.toLowerCase().startsWith('siesta')) {
     prefix = 'siesta';
   } else {
-    prefix = (await guildDb)?.prefix ?? '<';
+    prefix = guildDb?.prefix ?? '<';
+  }
+
+  if (message.content === `<@${client.user.id}>` || message.content === `<@${client.user.id}>`) {
+    message.reply({
+      content: `**🐬 Hello,** my name is **Siesta** and my prefix in this server is **${guildDb?.prefix ?? '<'}** but you also can use my **[/] Slash Commands**!`
+    });
   }
 
   if (!message.content.toLowerCase().startsWith(prefix)) return;

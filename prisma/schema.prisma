@@ -18,7 +18,6 @@ type GuildsWelcome {
   status  Boolean
 }
 
-
 model guilds {
   id         String           @id @map("_id")
   v          Int              @map("__v")
