@@ -40,12 +40,12 @@ export default new Command({
       .addFields(
         {
           name: '🛰️ Currently Playing',
-          value: `${shorten(current.title, 15)}, **Resquested by:** \`${requester.tag}\`\n${
+          value: `${shorten(current.title, 15)}, **Resquested by:** \`${requester.tag}\`\n[ ${
             current.isStream
               ? '**🔴 LIVE**'
               : `**${formatTime(convertMs(context.player.position))} \`${progressBar(context.player.position / 1000 / 50, current.duration / 1000 / 50, 20)}\` ${formatTime(
                   convertMs(current.duration)
-                )}**`
+                )}** ]12`
           }`,
           inline: true
         },

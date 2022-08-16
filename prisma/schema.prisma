@@ -7,27 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type GuildsAntiinvite {
-  status    Boolean
-  whitelist Json?
-}
-
-type GuildsWelcome {
-  channel String?
-  message String?
-  status  Boolean
-}
-
 model guilds {
-  id         String           @id @map("_id")
-  v          Int              @map("__v")
-  antiinvite GuildsAntiinvite
-  prefix     String 
-  welcome    GuildsWelcome
+  id     String @id @map("_id")
+  prefix String @default("<")
 }
 
 model users {
-  id              String          @id @map("_id")
-  v               Int             @map("__v")
-  blacklist       Boolean
+  id        String  @id @map("_id")
+  blacklist Boolean @default(false)
 }

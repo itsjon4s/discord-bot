@@ -16,6 +16,15 @@ export default new Event('messageCreate', async message => {
     }
   });
 
+  if (!guildDb) {
+    await client.db.guilds.create({
+      data: {
+        id: message.guildId
+      }
+    });
+  }
+  ``;
+
   if (message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'))) {
     prefix = String(mentionRegex);
   } else if (message.content.toLowerCase().startsWith('siesta')) {
@@ -40,7 +49,7 @@ export default new Event('messageCreate', async message => {
 
   if (command.playerOnly && !client.manager.players.get(message.guildId)) {
     return message.reply({
-      content: '**☝️ I\'m not playing music on this server.**'
+      content: "**☝️ I'm not playing music on this server.**"
     });
   }
   if (command.ownerOnly && !['499356551535001610', '431768491759239211'].some(id => message.author.id === id)) return;
