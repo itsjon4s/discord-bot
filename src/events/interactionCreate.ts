@@ -1,16 +1,20 @@
 /* eslint-disable consistent-return */
-import { client } from '..';
-import { Event } from '../structures/Event';
+import chalk from 'chalk';
 import { ApplicationCommandOptionType, AutocompleteInteraction, ChatInputCommandInteraction, GuildMember, Interaction } from 'discord.js';
 import { request } from 'undici';
+import { client } from '..';
 import CommandContext from '../structures/CommandContext';
-import chalk from 'chalk';
+import { Event } from '../structures/Event';
 
 export default new Event('interactionCreate', async (interaction: Interaction) => {
   if (interaction instanceof ChatInputCommandInteraction) {
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
-    if (command.playerOnly && !client.manager.players.get(interaction.guildId)) return;
+    if (command.playerOnly && !client.manager.players.get(interaction.guildId)) {
+      return interaction.reply({
+        content: '**☝️ I\'m not playing music on this server.**'
+      });
+    }
 
     if (command.ownerOnly && !['499356551535001610', '431768491759239211'].some(id => interaction.user.id === id)) return;
 

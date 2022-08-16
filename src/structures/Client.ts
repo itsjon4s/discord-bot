@@ -1,13 +1,13 @@
-import { ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Options } from 'discord.js';
+import { ActivityType, ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Options } from 'discord.js';
 import glob from 'glob';
 import { promisify } from 'util';
 // @ts-ignore
+import { PrismaClient } from '@prisma/client';
 import config from '../../config';
 import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
 import { Manager } from './Music';
-import { PrismaClient } from '@prisma/client';
 
 const globPromise = promisify(glob);
 
@@ -33,7 +33,10 @@ export class Siesta extends Client {
         UserManager: 0
       }),
       intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates],
-      presence: { status: config.enviroment === 'dev' ? 'idle' : 'online' },
+      presence: { status: config.enviroment === 'dev' ? 'idle' : 'online', activities: [{
+        name: '/help',
+        type: ActivityType.Listening
+      }] },
       allowedMentions: {
         parse: ['users'],
         repliedUser: false

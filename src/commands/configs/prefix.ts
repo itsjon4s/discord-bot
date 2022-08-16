@@ -38,7 +38,7 @@ export default new Command({
 
     await client.db.guilds.update({
       where: {
-        id: context.guild.id
+        id: context.guildId
       },
       data: {
         prefix: newPrefix

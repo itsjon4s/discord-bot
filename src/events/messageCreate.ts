@@ -38,8 +38,11 @@ export default new Event('messageCreate', async message => {
 
   if (!command) return;
 
-  if (command.playerOnly && !client.manager.players.get(message.guildId)) return;
-
+  if (command.playerOnly && !client.manager.players.get(message.guildId)) {
+    return message.reply({
+      content: '**☝️ I\'m not playing music on this server.**'
+    });
+  }
   if (command.ownerOnly && !['499356551535001610', '431768491759239211'].some(id => message.author.id === id)) return;
 
   if (command.sameChannelOnly) {
