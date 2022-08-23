@@ -6,14 +6,13 @@ export class WebServer {
   server: FastifyInstance;
   client: Siesta;
   constructor(client: Siesta) {
-    this.server = fastify({});
+    this.server = fastify({ logger: true });
     this.client = client;
   }
 
   init() {
     this.server.register(fastifyCors, {
-      origin: '*',
-      methods: 'GET'
+      origin: '*'
     });
 
     this.server.get('/stats', (_req, res) => {
