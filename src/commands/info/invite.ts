@@ -9,7 +9,7 @@ export default new Command({
     const button = new ButtonBuilder()
       .setStyle(ButtonStyle.Link)
       .setLabel('Invite me!')
-      .setURL('https://discord.com/api/oauth2/authorize?client_id=907747074118926347&permissions=271641686&scope=applications.commands%20bot');
+      .setURL('https://siestaa.vercel.app/invite');
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents([button]);
 
     return context.reply({

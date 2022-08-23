@@ -27,9 +27,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@fastify/cors": "^8.1.0",
     "@prisma/client": "4.2.1",
     "chalk": "^4.0.0",
     "discord.js": "^14.1.2",
+    "fastify": "^4.5.2",
     "glob": "^7.2.0",
     "undici": "^5.8.2",
     "vulkava": "^1.5.5",

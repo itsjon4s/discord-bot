@@ -1,6 +1,6 @@
 import { Colors, EmbedBuilder } from 'discord.js';
-import { Command } from '../../structures/Command';
 import { readdirSync } from 'node:fs';
+import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'help',
@@ -21,11 +21,11 @@ export default new Command({
     const embed = new EmbedBuilder()
       .setThumbnail(client.user.displayAvatarURL())
       .setColor(Colors.DarkGrey)
-      .setAuthor({ name: 'Help Menu', iconURL: client.user.displayAvatarURL() })
+      .setAuthor({ name: 'Help Menu', iconURL: client.user.displayAvatarURL(), url: 'https://siestaa.vercel.app/' })
       .setDescription(
         `> Currently i have **${
           client.commands.filter(cmd => !cmd.ownerOnly).size
-        } commands!**\n> If you need **help with anything** you can **join my [support server](https://discord.gg/vYEutrG7gY)!**\n> **You Can invite me using \`/invite\`!**`
+        } commands!**\n> If you need **help with anything** you can **join my [support server](https://siestaa.vercel.app/discord)!**\n> **You Can invite me using \`/invite\`!**`
       )
       .addFields(
         {

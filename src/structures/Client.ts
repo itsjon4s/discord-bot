@@ -4,6 +4,7 @@ import glob from 'glob';
 import { promisify } from 'util';
 // @ts-ignore
 import config from '../../config';
+import { WebServer } from '../webserver';
 import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
@@ -53,7 +54,7 @@ export class Siesta extends Client {
     this.db = new PrismaClient();
   }
 
-  init() {
+  async init() {
     this.logger = createLogger(
       {
         handleExceptions: true,
@@ -62,7 +63,8 @@ export class Siesta extends Client {
       this
     );
     this.registerModules();
-    this.login(config.token);
+    await this.login(config.token);
+    new WebServer(this).init();
   }
 
   async importFile(file: string) {
