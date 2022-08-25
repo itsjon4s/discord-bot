@@ -15,6 +15,6 @@
         "resolveJsonModule": true,
         "importHelpers": true
     },
-    "include": ["src", "config.d.ts"],
+    "include": ["src"],
     "exclude": ["node_modules"]
 }

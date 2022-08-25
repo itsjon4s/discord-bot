@@ -4,5 +4,5 @@ node_modules/
 logs/
 package-lock.json
 *lock
-config.ts
+nodes.ts
 .env

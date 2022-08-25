@@ -2,8 +2,9 @@ import { PrismaClient } from '@prisma/client';
 import { ActivityType, ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Options } from 'discord.js';
 import glob from 'glob';
 import { promisify } from 'util';
+import { NodeOptions } from 'vulkava';
 // @ts-ignore
-import config from '../../config';
+import { Nodes } from '../../nodes';
 import { WebServer } from '../webserver';
 import { CommandType } from './Command';
 import { Event } from './Event';
@@ -35,10 +36,10 @@ export class Siesta extends Client {
       }),
       intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates],
       presence: {
-        status: config.enviroment === 'dev' ? 'idle' : 'online',
+        status: process.env.enviroment === 'dev' ? 'idle' : 'online',
         activities: [
           {
-            name: '/help',
+            name: '/help - siestaa.vercel.app',
             type: ActivityType.Listening
           }
         ]
@@ -50,7 +51,7 @@ export class Siesta extends Client {
     });
     this.commands = new Collection();
     this.aliases = new Collection();
-    this.manager = new Manager(this, config.nodes);
+    this.manager = new Manager(this, Nodes);
     this.db = new PrismaClient();
   }
 
@@ -63,7 +64,7 @@ export class Siesta extends Client {
       this
     );
     this.registerModules();
-    await this.login(config.token);
+    await this.login(process.env.TOKEN);
     new WebServer(this).init();
   }
 
@@ -96,7 +97,7 @@ export class Siesta extends Client {
     this.logger.info(`Loaded ${commandFiles.length} commands successfully!`, { tags: ['Commands'] });
 
     this.on('ready', () => {
-      if (config.enviroment === 'prod') this.application.commands.set(slashCommands);
+      if (process.env.enviroment === 'prod') this.application.commands.set(slashCommands);
     });
   }
 

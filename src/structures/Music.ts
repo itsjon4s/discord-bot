@@ -1,12 +1,18 @@
 /* eslint-disable no-promise-executor-return */
-import { TextChannel } from 'discord.js';
-import { Node, NodeOptions, Vulkava } from 'vulkava';
-import { IncomingDiscordPayload } from 'vulkava/lib/@types';
+import type { TextChannel } from 'discord.js';
+import { Node, NodeOptions, Track, Vulkava } from 'vulkava';
+import type { IncomingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
-
 const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
+
+interface AutoplayProps {
+  guildId: string;
+  currentMusic: Track;
+}
+
 export class Manager extends Vulkava {
   client: Siesta;
+  autoplay: Map<string, AutoplayProps>;
 
   constructor(client: Siesta, nodes: NodeOptions[]) {
     super({
@@ -15,6 +21,7 @@ export class Manager extends Vulkava {
     });
 
     this.client = client;
+    this.autoplay = new Map();
 
     this.on('nodeConnect', (node: Node) => {
       this.client.logger.info(`Node ${node.options.id} Connected`, { tags: ['Vulkava'] });

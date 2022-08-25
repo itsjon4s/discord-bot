@@ -6,7 +6,7 @@ export class WebServer {
   server: FastifyInstance;
   client: Siesta;
   constructor(client: Siesta) {
-    this.server = fastify({ logger: true });
+    this.server = fastify({});
     this.client = client;
   }
 
