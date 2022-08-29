@@ -21,7 +21,7 @@ export class Queue extends DefaultQueue {
     let pos = start;
     for (; pos < end && this.tracks[pos]; pos++) {
       const track = this.tracks[pos] as Track;
-      data.push(`**${pos + 1} - [${shorten(track.title, 12)}](${track.uri}) \`[${this.formatTime(convertMs(track.duration))}]\`**`);
+      data.push(`**${pos + 1} - [${shorten(track.title, 45)}](${track.uri}) \`[${this.formatTime(convertMs(track.duration))}]\`**`);
     }
     return data.join('\n');
   }

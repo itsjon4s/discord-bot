@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 import { ActivityType, ApplicationCommandDataResolvable, Client, ClientEvents, Collection, GatewayIntentBits, Options } from 'discord.js';
 import glob from 'glob';
 import { promisify } from 'util';
-import { NodeOptions } from 'vulkava';
 // @ts-ignore
 import { Nodes } from '../../nodes';
 import { WebServer } from '../webserver';
@@ -10,7 +9,6 @@ import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
 import { Manager } from './Music';
-
 const globPromise = promisify(glob);
 
 export class Siesta extends Client {
