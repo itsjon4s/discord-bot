@@ -9,6 +9,7 @@ import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
 import { Manager } from './Music';
+
 const globPromise = promisify(glob);
 
 export class Siesta extends Client {
@@ -66,10 +67,6 @@ export class Siesta extends Client {
     new WebServer(this).init();
   }
 
-  async importFile(file: string) {
-    return (await import(file))?.default;
-  }
-
   registerModules() {
     this.loadCommands();
     this.loadEvents();
@@ -107,5 +104,9 @@ export class Siesta extends Client {
     });
 
     this.logger.info(`Loaded ${eventFiles.length} events successfully!`, { tags: ['Events'] });
+  }
+
+  async importFile(file: string) {
+    return (await import(file))?.default;
   }
 }

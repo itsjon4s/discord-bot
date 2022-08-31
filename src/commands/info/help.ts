@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { readdirSync } from 'node:fs';
 import { Command } from '../../structures/Command';
 
@@ -20,7 +20,7 @@ export default new Command({
 
     const embed = new EmbedBuilder()
       .setThumbnail(client.user.displayAvatarURL())
-      .setColor(Colors.DarkGrey)
+      .setColor('#89b4fa')
       .setAuthor({ name: 'Help Menu', iconURL: client.user.displayAvatarURL(), url: 'https://siestaa.vercel.app/' })
       .setDescription(
         `> Currently i have **${

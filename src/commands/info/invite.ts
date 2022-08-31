@@ -6,10 +6,7 @@ export default new Command({
   description: '🛰️ › Replies with the bot invite',
   dmPermission: true,
   exec({ context }) {
-    const button = new ButtonBuilder()
-      .setStyle(ButtonStyle.Link)
-      .setLabel('Invite me!')
-      .setURL('https://siestaa.vercel.app/invite');
+    const button = new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel('Invite me!').setURL('https://siestaa.vercel.app/invite');
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents([button]);
 
     return context.reply({

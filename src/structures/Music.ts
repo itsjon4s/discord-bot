@@ -3,6 +3,7 @@ import type { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Track, Vulkava } from 'vulkava';
 import type { IncomingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
+
 const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 
 interface AutoplayProps {

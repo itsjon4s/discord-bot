@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-use-before-define */
-import { Colors, EmbedBuilder, User } from 'discord.js';
+import { EmbedBuilder, User } from 'discord.js';
 import { shorten } from '../../functions/text';
 import { convertMs } from '../../functions/time';
 import { Command } from '../../structures/Command';
@@ -36,7 +36,7 @@ export default new Command({
         iconURL: context.guild.iconURL()
       })
       .setDescription(queue.size > 0 ? queue.getTracksData(start, end) : '😔 The queue is empty')
-      .setColor(Colors.DarkGrey)
+      .setColor('#89b4fa')
       .addFields(
         {
           name: '🛰️ Currently Playing',

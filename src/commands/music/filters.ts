@@ -9,7 +9,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
-  async exec({ context }) {
+  exec({ context }) {
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder().setLabel('NightCore').setStyle(ButtonStyle.Secondary).setCustomId('nightcore'),
       new ButtonBuilder().setLabel('BassBoost').setStyle(ButtonStyle.Secondary).setCustomId('bassboost'),
@@ -19,7 +19,7 @@ export default new Command({
 
     context
       .reply({
-        content: `**🎤 Chose the filters that you want!**`,
+        content: '**🎤 Chose the filters that you want!**',
         components: [row],
         fetchReply: true
       })
@@ -29,12 +29,12 @@ export default new Command({
         });
 
         collector.on('collect', async (int: ButtonInteraction) => {
-          await int.deferUpdate()
+          await int.deferUpdate();
           if (int.user.id !== context.user.id) return;
           switch (int.customId) {
             case 'nightcore':
               msg.edit({
-                content: `**🎸 Enabled NightCore filter!**`,
+                content: '**🎸 Enabled NightCore filter!**',
                 components: []
               });
               context.player.filters.clear();
@@ -42,7 +42,7 @@ export default new Command({
               break;
             case 'bassboost':
               msg.edit({
-                content: `**🎸 Enabled BassBoost filter!**`,
+                content: '**🎸 Enabled BassBoost filter!**',
                 components: []
               });
               context.player.filters.clear();
@@ -50,7 +50,7 @@ export default new Command({
               break;
             case 'eightD':
               msg.edit({
-                content: `**🎸 Enabled 8D filter!**`,
+                content: '**🎸 Enabled 8D filter!**',
                 components: []
               });
               context.player.filters.clear();
@@ -58,7 +58,7 @@ export default new Command({
               break;
             case 'clear':
               msg.edit({
-                content: `**🎤 Cleared all the active filters!**`,
+                content: '**🎤 Cleared all the active filters!**',
                 components: []
               });
               context.player.filters.clear();

@@ -23,7 +23,6 @@ export default new Event('messageCreate', async message => {
       }
     });
   }
-  ``;
 
   if (message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'))) {
     prefix = String(mentionRegex);

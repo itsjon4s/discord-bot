@@ -9,6 +9,7 @@ export default new Command({
   name: 'eval',
   description: '☝️ › Evaluates a code (developers only)',
   ownerOnly: true,
+  aliases: ['ev'],
   options: [
     {
       name: 'code',
@@ -18,10 +19,11 @@ export default new Command({
     }
   ],
   dmPermission: true,
-  async exec({ context, client }) {
+  async exec({ context }) {
     try {
-      const res = await eval(context.args.join(' '));
-      const cleanResult = typeof res !== 'string' ? inspect(res, { depth: 0 }).replaceAll(client.token, '*') : res.replaceAll(client.token, '*');
+      const expr = context.args.join(' ');
+      const res = await eval(expr);
+      const cleanResult = typeof res !== 'string' ? inspect(res, { depth: 0 }).replaceAll(context.client.token, '*') : res.replaceAll(context.client.token, '*');
       return context.reply({
         content: `\`\`\`js\n${cleanResult.slice(0, 1900)}\`\`\``,
         ephemeral: true

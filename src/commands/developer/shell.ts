@@ -2,11 +2,13 @@
 import { exec } from 'child_process';
 import { ApplicationCommandOptionType } from 'discord.js';
 import { Command } from '../../structures/Command';
+
 const ANSI_REGEX = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g;
 export default new Command({
   name: 'shell',
   ownerOnly: true,
   description: '☝️ › Uses a command in the shell (developers only)',
+  aliases: ['sh'],
   options: [
     {
       name: 'command',
@@ -15,7 +17,7 @@ export default new Command({
       required: true
     }
   ],
-  async exec({ context }) {
+  exec({ context }) {
     const expr = context.args.join(' ');
     if (!expr) return;
 
@@ -25,12 +27,11 @@ export default new Command({
           content: `\`\`\`${err}\`\`\``,
           ephemeral: true
         });
-      } else {
-        return context.reply({
-          content: `\`\`\`\n${res.replace(ANSI_REGEX, '').slice(0, 1900)}\`\`\``,
-          ephemeral: true
-        });
       }
+      return context.reply({
+        content: `\`\`\`\n${res.replace(ANSI_REGEX, '').slice(0, 1900)}\`\`\``,
+        ephemeral: true
+      });
     });
   }
 });

@@ -1,4 +1,4 @@
-import { Colors, EmbedBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { formatTime } from '../../functions/time';
 import { Command } from '../../structures/Command';
 
@@ -8,7 +8,7 @@ export default new Command({
   dmPermission: true,
   async exec({ context, client }) {
     const embed = new EmbedBuilder()
-      .setColor(Colors.DarkGrey)
+      .setColor('#89b4fa')
       .setDescription(
         'Hello, my name is **Siesta** and i am a **music bot** made using ** [TypeScript](https://www.typescriptlang.org/) & [Node.js](https://nodejs.org/en/) ** with the propuse to **entratain the members of your server**.'
       )

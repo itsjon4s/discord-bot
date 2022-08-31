@@ -12,7 +12,7 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
     if (!command) return;
     if (command.playerOnly && !client.manager.players.get(interaction.guildId)) {
       return interaction.reply({
-        content: '**☝️ I\'m not playing music on this server.**'
+        content: "**☝️ I'm not playing music on this server.**"
       });
     }
 
