@@ -9,6 +9,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  prefixCompatible: true,
   exec({ context }) {
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder().setLabel('NightCore').setStyle(ButtonStyle.Secondary).setCustomId('nightcore'),

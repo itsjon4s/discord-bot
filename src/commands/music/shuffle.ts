@@ -7,6 +7,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  prefixCompatible: true,
   exec({ context }) {
     if (context.player.queue.size === 0) {
       return context.reply({

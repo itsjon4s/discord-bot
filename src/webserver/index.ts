@@ -25,6 +25,6 @@ export class WebServer {
       });
     });
 
-    this.server.listen({ port: 5555 });
+    this.server.listen({ port: 1234 });
   }
 }

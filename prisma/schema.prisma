@@ -7,9 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type WelcomeType {
+  status  Boolean @default(false)
+  message String  @default("")
+  channel String  @default("")
+}
+
 model guilds {
-  id     String @id @map("_id")
-  prefix String @default("<")
+  id      String      @id @map("_id")
+  prefix  String      @default("<")
+  welcome WelcomeType
 }
 
 model users {

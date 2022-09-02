@@ -9,6 +9,7 @@ export default new Command({
   playerOnly: false,
   sameChannelOnly: true,
   ownerOnly: false,
+  prefixCompatible: true,
   options: [
     {
       name: 'song',

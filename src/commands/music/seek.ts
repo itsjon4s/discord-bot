@@ -8,6 +8,7 @@ export default new Command({
   dmPermission: false,
   playerOnly: true,
   sameChannelOnly: true,
+  prefixCompatible: true,
   options: [
     {
       name: 'time',

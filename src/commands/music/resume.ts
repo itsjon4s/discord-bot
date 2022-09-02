@@ -7,6 +7,7 @@ export default new Command({
   sameChannelOnly: true,
   dmPermission: false,
   aliases: ['unpause'],
+  prefixCompatible: true,
   exec({ context }) {
     if (!context.player.current) {
       return context.reply({

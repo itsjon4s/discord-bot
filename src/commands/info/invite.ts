@@ -5,6 +5,7 @@ export default new Command({
   name: 'invite',
   description: '🛰️ › Replies with the bot invite',
   dmPermission: true,
+  prefixCompatible: true,
   exec({ context }) {
     const button = new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel('Invite me!').setURL('https://siestaa.vercel.app/invite');
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents([button]);

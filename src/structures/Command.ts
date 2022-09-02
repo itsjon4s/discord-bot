@@ -13,6 +13,7 @@ export type CommandType = {
   ownerOnly?: boolean;
   sameChannelOnly?: boolean;
   aliases?: string[];
+  prefixCompatible?: boolean;
 } & ChatInputApplicationCommandData;
 
 export class Command {

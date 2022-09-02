@@ -19,7 +19,8 @@ export default new Event('messageCreate', async message => {
   if (!guildDb) {
     await client.db.guilds.create({
       data: {
-        id: message.guildId
+        id: message.guildId,
+        welcome: {}
       }
     });
   }
@@ -46,6 +47,11 @@ export default new Event('messageCreate', async message => {
 
   if (!command) return;
 
+  if (!command.prefixCompatible) {
+    return message.reply({
+      content: '**☝️ This command is only avaliable via `[/] Slash Commands` type `/` to see more.**'
+    });
+  }
   if (command.playerOnly && !client.manager.players.get(message.guildId)) {
     return message.reply({
       content: "**☝️ I'm not playing music on this server.**"

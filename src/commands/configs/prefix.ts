@@ -4,6 +4,7 @@ import { Command } from '../../structures/Command';
 export default new Command({
   name: 'prefix',
   description: '📝 › Changes the bot prefix on your server.',
+  prefixCompatible: true,
   dmPermission: false,
   options: [
     {
@@ -22,7 +23,7 @@ export default new Command({
       });
     }
 
-    const newPrefix: string = context.args[0];
+    const newPrefix = context.args[0];
 
     if (!newPrefix) {
       return context.reply({

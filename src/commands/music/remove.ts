@@ -8,6 +8,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  prefixCompatible: true,
   options: [
     {
       name: 'song',

@@ -6,6 +6,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  prefixCompatible: true,
   aliases: ['dc', 'leave', 'stop'],
   exec({ context }) {
     context.player.destroy();

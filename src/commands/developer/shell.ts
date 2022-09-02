@@ -7,6 +7,7 @@ const ANSI_REGEX = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-
 export default new Command({
   name: 'shell',
   ownerOnly: true,
+  prefixCompatible: true,
   description: '☝️ › Uses a command in the shell (developers only)',
   aliases: ['sh'],
   options: [

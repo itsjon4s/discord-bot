@@ -13,6 +13,7 @@ export default new Command({
   sameChannelOnly: false,
   aliases: ['q', 'fila', 'nowplaying', 'np'],
   dmPermission: false,
+  prefixCompatible: true,
   exec({ context }) {
     const queue = context.player.queue as Queue;
 

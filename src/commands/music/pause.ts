@@ -6,6 +6,7 @@ export default new Command({
   playerOnly: true,
   sameChannelOnly: true,
   dmPermission: false,
+  prefixCompatible: true,
   exec({ context }) {
     if (!context.player.current) {
       return context.reply({

@@ -6,6 +6,7 @@ export default new Command({
   description: '🎶 › Change the volume of the music.',
   playerOnly: true,
   sameChannelOnly: true,
+  prefixCompatible: true,
   options: [
     {
       name: 'number',

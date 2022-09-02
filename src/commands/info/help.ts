@@ -6,6 +6,7 @@ export default new Command({
   name: 'help',
   description: '🛰️ › Sends some infos about me and my commands in case you need it.',
   dmPermission: true,
+  prefixCompatible: true,
   aliases: ['commands', 'comandos', 'h', 'cmds', 'ajuda'],
   exec({ context, client }) {
     const musicCommands = readdirSync(`${process.cwd()}/src/commands/music`).map(file => {
