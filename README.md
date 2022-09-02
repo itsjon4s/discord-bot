@@ -34,14 +34,21 @@ npm i -g yarn
 yarn install
 ```
 
-- `5.` Fill the `config.ts.example` and rename it to `config.ts`
-- `6.` Building to production
+- `5.` Fill the `.env.example` and rename it to `.env`
+- `6.` Fill the `nodes.example.ts` and rename it to `nodes.ts`
+- `7.` Genrate Prisma Client using
+
+```bash
+npx prisma generate
+```
+
+- `8.` Building to production
 
 ```bash
 yarn build
 ```
 
-- `7.` Starting the bot
+- `9.` Starting the bot
 
 ```bash
 yarn start
