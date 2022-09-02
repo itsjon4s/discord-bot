@@ -20,7 +20,11 @@ export default new Event('messageCreate', async message => {
     await client.db.guilds.create({
       data: {
         id: message.guildId,
-        welcome: {}
+        welcome: {
+          status: false,
+          message: '',
+          channel: ''
+        }
       }
     });
   }

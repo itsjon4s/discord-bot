@@ -14,9 +14,9 @@ type WelcomeType {
 }
 
 model guilds {
-  id      String      @id @map("_id")
-  prefix  String      @default("<")
-  welcome WelcomeType
+  id      String       @id @map("_id")
+  prefix  String       @default("<")
+  welcome WelcomeType?
 }
 
 model users {
