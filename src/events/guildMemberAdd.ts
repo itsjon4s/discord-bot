@@ -10,7 +10,7 @@ export default new Event('guildMemberAdd', async member => {
     }
   });
 
-  if (guildDoc && guildDoc.welcome?.status) {
+  if (guildDoc && guildDoc.welcome?.status && guildDoc.welcome?.channel && guildDoc.welcome?.message) {
     const message = guildDoc.welcome.message
       .replaceAll('/member/', member.toString())
       .replaceAll('/serverName/', guild.name)
