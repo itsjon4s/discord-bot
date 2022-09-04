@@ -9,7 +9,23 @@ import { Event } from '../structures/Event';
 export default new Event('interactionCreate', async (interaction: Interaction) => {
   if (interaction instanceof ChatInputCommandInteraction) {
     const command = client.commands.get(interaction.commandName);
+
     if (!command) return;
+
+    const doc = await client.db.users.findFirst({
+      where: {
+        id: interaction.user.id
+      }
+    });
+
+    if (!doc) {
+      await client.db.users.create({
+        data: {
+          id: interaction.user.id
+        }
+      });
+    }
+
     if (command.playerOnly && !client.manager.players.get(interaction.guildId)) {
       return interaction.reply({
         content: "**☝️ I'm not playing music on this server.**"

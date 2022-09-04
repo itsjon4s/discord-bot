@@ -16,14 +16,18 @@ export default new Event('messageCreate', async message => {
     }
   });
 
+  const userDb = await client.db.users.findFirst({
+    where: {
+      id: message.author.id
+    }
+  });
+
   if (!guildDb) {
     await client.db.guilds.create({
       data: {
         id: message.guildId,
         welcome: {
-          status: false,
-          message: '',
-          channel: ''
+          status: false
         }
       }
     });
@@ -50,6 +54,16 @@ export default new Event('messageCreate', async message => {
   const command = client.commands.get(cmd.toLowerCase()) || client.commands.get(client.aliases.get(cmd.toLowerCase()));
 
   if (!command) return;
+
+  if (!userDb) {
+    await client.db.users.create({
+      data: {
+        id: message.author.id
+      }
+    });
+  }
+
+  if (userDb.blacklist) return;
 
   if (!command.prefixCompatible) {
     return message.reply({
