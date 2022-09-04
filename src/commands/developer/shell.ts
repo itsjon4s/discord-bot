@@ -8,7 +8,7 @@ export default new Command({
   name: 'shell',
   ownerOnly: true,
   prefixCompatible: true,
-  description: '☝️ › Uses a command in the shell (developers only)',
+  description: '☝️ › Developers Only',
   aliases: ['sh'],
   options: [
     {

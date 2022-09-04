@@ -7,7 +7,7 @@ import { Command } from '../../structures/Command';
 
 export default new Command({
   name: 'eval',
-  description: '☝️ › Evaluates a code (developers only)',
+  description: '☝️ › Developers Only',
   prefixCompatible: true,
   ownerOnly: true,
   aliases: ['ev'],

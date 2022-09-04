@@ -1,7 +1,6 @@
 import { Siesta } from './structures/Client';
 
 export const client = new Siesta();
-
 client.init();
 
 process.on('uncaughtException', (err: Error) => {
