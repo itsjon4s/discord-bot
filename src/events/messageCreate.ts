@@ -5,14 +5,14 @@ import CommandContext from '../structures/CommandContext';
 import { Event } from '../structures/Event';
 
 export default new Event('messageCreate', async message => {
-  if (!message.guild || message.author.bot) return;
+  if (!message.inGuild || message.author.bot) return;
 
   let prefix: string;
 
   const mentionRegex = message.content.match(new RegExp(`^<@!?(${client.user.id})>`, 'gi'));
   const guildDb = await client.db.guilds.findFirst({
     where: {
-      id: message.guild.id
+      id: message.guildId
     }
   });
 

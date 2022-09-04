@@ -65,7 +65,7 @@ export default new Event('interactionCreate', async (interaction: Interaction) =
 
     const context = new CommandContext(client, interaction, args);
 
-    client.logger.info(`Command ${chalk.bold(command.name)} used in ${chalk.bold(context.guild.name)} by ${chalk.bold(context.user.username)}`, {
+    client.logger.info(`Command ${chalk.bold(command.name)} used in ${chalk.bold(context.guild ? 'DM' : context.guild.name)} by ${chalk.bold(context.user.username)}`, {
       tags: ['Command']
     });
     try {
