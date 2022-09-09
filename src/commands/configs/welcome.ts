@@ -50,11 +50,18 @@ export default new Command({
     }
   ],
   async exec({ context }) {
+    if (!context.member.permissions.has('ManageGuild')) {
+      return context.reply({
+        content: '**☝️ You need have the `Manage Guild` permission to execute this command.**'
+      });
+    }
+
     const doc = await client.db.guilds.findUnique({
       where: {
         id: context.guildId
       }
     });
+
     switch (context.args[0]) {
       case 'channel':
         const channel = context.client.channels.cache.get(context.args[1]);

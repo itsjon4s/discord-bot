@@ -6,20 +6,20 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/itsjon4s/SiestaRewrite.git"
+    "url": "https://github.com/itsjon4s/sieta-bot.git"
   },
   "bugs": {
-    "url": "https://github.com/itsjon4s/SiestaRewrite/issues"
+    "url": "https://github.com/itsjon4s/siesta-bot/issues"
   },
-  "homepage": "https://github.com/itsjon4s/SiestaRewrite#readme",
+  "homepage": "https://github.com/itsjon4s/siesta-bot#readme",
   "author": "Jon4s",
   "license": "GPL-3.0",
   "engines": {
     "node": ">=16.9.0"
   },
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc -w",
+    "build": "tsc --project tsconfig.json",
+    "build:watch": "tsc --project tsconfig.json -w",
     "start": "node dist/src/index.js",
     "dev": "tsnd --expose-gc --transpile-only --ignore-watch node_modules --respawn src/index.ts",
     "types:check": "tsc --noEmit",

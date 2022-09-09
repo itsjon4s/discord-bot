@@ -1,19 +1,13 @@
 /* eslint-disable no-promise-executor-return */
 import type { TextChannel } from 'discord.js';
 import { Node, NodeOptions, Track, Vulkava } from 'vulkava';
-import type { IncomingDiscordPayload } from 'vulkava/lib/@types';
 import type { Siesta } from './Client';
 
 const sleep = (ms: number): Promise<unknown> => new Promise(resolve => setTimeout(resolve, ms));
 
-interface AutoplayProps {
-  guildId: string;
-  currentMusic: Track;
-}
-
 export class Manager extends Vulkava {
   client: Siesta;
-  autoplay: Map<string, AutoplayProps>;
+  autoplay: Map<string, Track>;
 
   constructor(client: Siesta, nodes: NodeOptions[]) {
     super({
@@ -36,6 +30,11 @@ export class Manager extends Vulkava {
     this.on('trackStart', (player, track) => {
       const channel = client.guilds.cache.get(player.guildId).channels.cache.get(player.textChannelId) as TextChannel;
 
+      if (this.autoplay.get(player.guildId)) {
+        this.autoplay.delete(player.guildId);
+        this.autoplay.set(player.guildId, track);
+      }
+
       channel
         .send({
           content: `**🎤 Starting to play \`${track.title.replaceAll('`', "'")}\`**`
@@ -49,13 +48,29 @@ export class Manager extends Vulkava {
     });
 
     this.on('queueEnd', async player => {
-      await sleep(3 * 60 * 1000);
-      if (this.players.get(player.guildId) && this.players.get(player.guildId).queue.size === 0 && !this.players.get(player.guildId).playing) {
-        const channel = this.client.channels.cache.get(player.textChannelId) as TextChannel;
-        channel.send({
-          content: "**🔇 I wasn't playing for 3 minutes so i left the channel.**"
+      if (this.autoplay.get(player.guildId)) {
+        const track = this.autoplay.get(player.guildId);
+        const results = await this.search(`https://www.youtube.com/watch?v=${track.identifier}&list=RD${track.identifier}`);
+        if (!results.tracks.length) {
+          return player.destroy();
+        }
+        const tracks = results.tracks.map(newTrack => (newTrack.title !== track.title ? newTrack : null)).filter(f => f);
+        const newTrack = tracks[Math.floor(Math.random() * tracks.length)];
+        newTrack.setRequester({
+          tag: this.client.user.tag,
+          id: this.client.user.id
         });
-        player.destroy();
+        player.queue.add(newTrack);
+        player.play().catch(() => {});
+      } else {
+        await sleep(3 * 60 * 1000);
+        if (this.players.get(player.guildId) && this.players.get(player.guildId).queue.size === 0 && !this.players.get(player.guildId).playing) {
+          const channel = this.client.channels.cache.get(player.textChannelId) as TextChannel;
+          channel.send({
+            content: "**🔇 I wasn't playing for 3 minutes so i left the channel.**"
+          });
+          player.destroy();
+        }
       }
     });
 
@@ -66,6 +81,6 @@ export class Manager extends Vulkava {
 
   init() {
     super.start(this.client.user.id);
-    this.client.on('raw', (packet: IncomingDiscordPayload) => this.handleVoiceUpdate(packet));
+    this.client.on('raw', packet => this.handleVoiceUpdate(packet));
   }
 }
