@@ -1,71 +1,29 @@
-/* eslint-disable no-bitwise */
-
-export const formatTime = (ms: number) => {
-  let seconds = ms / 1000;
-  const days = ~~(seconds / 86400);
-  seconds %= 86400;
-  const hours = ~~(seconds / 3600);
-  seconds %= 3600;
-  const minutes = ~~(seconds / 60);
-  seconds %= 60;
-
-  if (days) {
-    return `${days}d, ${hours}h, ${minutes}m, ${seconds.toFixed()}s`;
-  }
-  if (hours) {
-    return `${hours}h, ${minutes}m, ${seconds.toFixed()}s`;
-  }
-  if (minutes) {
-    return `${minutes}m, ${seconds.toFixed()}s`;
-  }
-  return `${seconds.toFixed()}s`;
+export const formatTime = (ms) => {
+  let s = ms / 1000, d = Math.floor(s / 86400);
+  s %= 86400;
+  let h = Math.floor(s / 3600);
+  s %= 3600;
+  let m = Math.floor(s / 60);
+  s %= 60;
+  return `${d ? `${d}d, ` : ''}${h ? `${h}h, ` : ''}${m ? `${m}m, ` : ''}${s.toFixed()}s`;
 };
 
-export const timeToMS = (time: string) => {
-  const timeUnits = time
-    .replace(/[\d\s]/g, () => '')
-    .toLowerCase()
-    .split('');
-  const formats = ['d', 'h', 'm', 's'];
-
-  const isValid = timeUnits.length === new Set(timeUnits).size && timeUnits.every((u, i, a) => formats.includes(u) && formats.indexOf(a[i - 1]) < formats.indexOf(u));
-  if (!isValid) return null;
-
-  const formatted = time
-    .replace(/([a-zA-Z])/g, '$1 ')
-    .toLowerCase()
-    .trim()
-    .split(' ')
-    .filter(f => !!f);
-  if (formatted.some(e => !/[0-9]/.test(e))) return null;
-
-  const invalid = {
-    h: 24,
-    m: 60,
-    s: 60
-  };
-  for (const f of formatted) {
-    const value = f.replace(/\D/g, '');
-    const unit = f.replace(/\d/gi, '');
-
-    if (value >= invalid[unit]) return null;
+export const timeToMS = (t) => {
+  const e = t.replace(/[\d\s]/g, () => "").toLowerCase().split(""),
+    f = ["d", "h", "m", "s"];
+  if (e.length !== new Set(e).size || !e.every((t, r, a) => f.includes(t) && f.indexOf(a[r - 1]) < f.indexOf(t))) return null;
+  const d = t.replace(/([a-zA-Z])/g, "$1 ").toLowerCase().trim().split(" ").filter(t => !!t);
+  if (d.some(t => !/[\d]/.test(t))) return null;
+  const u = { h: 24, m: 60, s: 60 };
+  for (const t of d) {
+    const e = t.replace(/\D/g, ""), r = t.replace(/\d/gi, "");
+    if (e >= u[r]) return null;
   }
-
-  const convertions = {
-    d: 86_400_000,
-    h: 3_600_000,
-    m: 60_000,
-    s: 1000
-  };
-
-  return formatted.reduce((acc, curr) => acc + parseInt(curr.substring(0, curr.length - 1), 10) * convertions[curr[curr.length - 1]], 0);
+  const o = { d: 86400000, h: 3600000, m: 60000, s: 1000 };
+  return d.reduce((t, e) => t + parseInt(e.substring(0, e.length - 1), 10) * o[e[e.length - 1]], 0);
 };
 
-export function convertMs(ms: number) {
-  const seconds = ~~(ms / 1000);
-  const minutes = ~~(seconds / 60);
-  const hours = ~~(minutes / 60);
-  const days = ~~(hours / 24);
-
-  return { days, hours: hours % 24, minutes: minutes % 60, seconds: seconds % 60 };
+export function convertMs(ms) {
+  const s = Math.floor(ms / 1000), m = Math.floor(s / 60), h = Math.floor(m / 60), d = Math.floor(h / 24);
+  return { days: d, hours: h % 24, minutes: m % 60, seconds: s % 60 };
 }

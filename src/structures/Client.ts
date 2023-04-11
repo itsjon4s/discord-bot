@@ -4,7 +4,6 @@ import glob from 'glob';
 import { promisify } from 'util';
 // @ts-ignore
 import { Nodes } from '../../nodes';
-import { WebServer } from '../webserver';
 import { CommandType } from './Command';
 import { Event } from './Event';
 import { createLogger, Logger } from './Logger';
@@ -64,7 +63,6 @@ export class Siesta extends Client {
     );
     this.registerModules();
     await this.login(process.env.TOKEN);
-    new WebServer(this).init();
   }
 
   registerModules() {

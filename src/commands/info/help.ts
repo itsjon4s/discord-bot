@@ -20,26 +20,28 @@ export default new Command({
     });
 
     const embed = new EmbedBuilder()
-      .setThumbnail(client.user.displayAvatarURL())
       .setColor('#89b4fa')
-      .setAuthor({ name: 'Help Menu', iconURL: client.user.displayAvatarURL(), url: 'https://siestaa.vercel.app/' })
+      .setAuthor({ name: 'Help Menu', iconURL: client.user.displayAvatarURL() })
       .setDescription(
         `> Currently i have **${
           client.commands.filter(cmd => !cmd.ownerOnly).size
-        } commands!**\n> If you need **help with anything** you can **join my [support server](https://siestaa.vercel.app/discord)!**\n> **You Can invite me using \`/invite\`!**`
+        } commands!**\n> If you need **help with anything** you can **join my [support server](https://discord.gg/ZBtcHpEQEh)!**\n> **You Can invite me using \`/invite\`!**`
       )
       .addFields(
         {
           name: `🛰️ Information Commands [${informationCommands.length}]`,
-          value: informationCommands.join(', ')
+          value: informationCommands.join(', '),
+          inline: true
         },
         {
           name: `🎤 Music Commands [${musicCommands.length}]`,
-          value: musicCommands.join(', ')
+          value: musicCommands.join(', '),
+          inline: true
         },
         {
           name: `📝 Configuration Commands [${configurationCommands.length}]`,
-          value: configurationCommands.join(', ')
+          value: configurationCommands.join(', '),
+          inline: true
         }
       );
 

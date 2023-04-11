@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Guild, GuildMember, InteractionReplyOptions, Message, ReplyMessageOptions, TextChannel, User } from 'discord.js';
+import { ChatInputCommandInteraction, Guild, GuildMember, InteractionReplyOptions, Message, BaseMessageOptions, TextChannel, User } from 'discord.js';
 import { Player } from 'vulkava';
 import { Siesta } from './Client';
 
@@ -13,7 +13,7 @@ export default class CommandContext {
     this.args = args;
   }
 
-  public reply(opts: ReplyMessageOptions | InteractionReplyOptions): Promise<unknown> {
+  public reply(opts: BaseMessageOptions | InteractionReplyOptions): Promise<unknown> {
     if (this.interaction instanceof ChatInputCommandInteraction) {
       if (this.interaction.replied) {
         return this.interaction.followUp(Object.assign(opts, { fetchReply: true }) as InteractionReplyOptions);
@@ -24,7 +24,7 @@ export default class CommandContext {
       return this.interaction.reply(Object.assign(opts, { fetchReply: true }) as InteractionReplyOptions);
     }
     if (this.interaction instanceof Message) {
-      return this.interaction.reply(opts as ReplyMessageOptions);
+      return this.interaction.reply(opts as BaseMessageOptions);
     }
   }
 
